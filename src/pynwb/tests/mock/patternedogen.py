@@ -159,10 +159,10 @@ def mock_PatternedOptogeneticMethod(
         name=name or name_generator("PatternedOptogeneticMethod"),
         description=description,
         device=device or mock_Device(nwbfile=nwbfile),
-        light_source=light_source or mock_LightSource(nwbfile),
-        spatial_light_modulator=spatial_light_modulator or mock_SpatialLightModulator(nwbfile),
+        light_source=light_source or mock_LightSource(nwbfile=nwbfile),
+        spatial_light_modulator=spatial_light_modulator or mock_SpatialLightModulator(nwbfile=nwbfile),
         excitation_lambda=excitation_lambda,
-        stimulus_pattern=stimulus_pattern or mock_OptogeneticStimulusPattern(nwbfile),
+        stimulus_pattern=stimulus_pattern or mock_OptogeneticStimulusPattern(nwbfile=nwbfile),
         location=location,
         effector=effector,
     )
@@ -176,7 +176,7 @@ def mock_PatternedOptogeneticMethod(
 def mock_Hologram(
     name: Optional[str] = None,
     rois=None,
-    n_rois=None,
+    n_rois: int = 10,
     plane_segmentation: Optional[PlaneSegmentation] = None,
     nwbfile: Optional[NWBFile] = None,
 ) -> Hologram:
@@ -200,8 +200,8 @@ def mock_PatternedOptogeneticStimulusTable(
     start_time: list = [0.0, 0.1, 0.2],
     stop_time: list = [0.7, 0.8, 0.9],
     power_per_target: list = [700.0, 800.0, 900.0],
-    method=None,
-    hologram=None,
+    method: list = [None, None, None],
+    hologram: list = [None, None, None],
     nwbfile: Optional[NWBFile] = None,
 ) -> PatternedOptogeneticStimulusTable:
     optogenetic_stimulus_table = PatternedOptogeneticStimulusTable(
@@ -212,8 +212,8 @@ def mock_PatternedOptogeneticStimulusTable(
             start_time=start,
             stop_time=stop_time[i],
             power_per_target=power_per_target[i],
-            method=method[i] or mock_PatternedOptogeneticMethod(nwbfile),
-            hologram=hologram[i] or mock_Hologram(nwbfile),
+            method=method[i] or mock_PatternedOptogeneticMethod(nwbfile=nwbfile),
+            hologram=hologram[i] or mock_Hologram(nwbfile=nwbfile),
         )
 
     if nwbfile is not None:

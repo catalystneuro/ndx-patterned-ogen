@@ -51,8 +51,8 @@ class TestPatternedOgenConstructor(TestCase):
             start_time=start_time,
             stop_time=stop_time,
             power_per_target=power_per_target,
-            method=mock_PatternedOptogeneticMethod(self.nwbfile),
-            hologram=mock_Hologram(self.nwbfile),
+            method=mock_PatternedOptogeneticMethod(nwbfile=self.nwbfile),
+            hologram=mock_Hologram(nwbfile=self.nwbfile),
         )
 
         self.assertEqual(stimulus_table.name, "PatternedOptogeneticStimulusTable")
@@ -92,8 +92,8 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
             start_time=start_time,
             stop_time=stop_time,
             power_per_target=power_per_target,
-            method=mock_PatternedOptogeneticMethod(self.nwbfile),
-            hologram=mock_Hologram(self.nwbfile),
+            method=mock_PatternedOptogeneticMethod(nwbfile=self.nwbfile),
+            hologram=mock_Hologram(nwbfile=self.nwbfile),
         )
 
         self.nwbfile.add_time_intervals(stimulus_table)
@@ -128,8 +128,8 @@ class TestPatternedOptogeneticStimulusTableRoundtripPyNWB(NWBH5IOFlexMixin, Test
             start_time=start_time,
             stop_time=stop_time,
             power_per_target=power_per_target,
-            method=mock_PatternedOptogeneticMethod(self.nwbfile),
-            hologram=mock_Hologram(self.nwbfile),
+            method=mock_PatternedOptogeneticMethod(nwbfile=self.nwbfile),
+            hologram=mock_Hologram(nwbfile=self.nwbfile),
         )
 
         self.nwbfile.add_time_intervals(stimulus_table)
