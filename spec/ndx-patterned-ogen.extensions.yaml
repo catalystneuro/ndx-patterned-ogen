@@ -1,8 +1,169 @@
 groups:
-- neurodata_type_def: TetrodeSeries
-  neurodata_type_inc: ElectricalSeries
-  doc: An extension of ElectricalSeries to include the tetrode ID for each time series.
-  attributes:
-  - name: trode_id
-    dtype: int32
-    doc: The tetrode ID.
+  - neurodata_type_def: OptogeneticStimulusPattern
+    neurodata_type_inc: LabMetaData
+    doc: Holographic excitation single ROI
+    attributes:
+      - name: description
+        dtype: text
+        doc: description of the stimulus pattern
+      - name: sweep_size
+        dtype: numeric
+        doc:
+          Size or diameter of the scanning sweep pattern (in micrometers) if spatially
+          modulated during stimulation.If a scalar is provided, the
+          sweep pattern is assumed to be a circle (for 2D patterns). If 'sweep_size'
+          is a two dimensional array, the ROI is assumed to be a rectangle, with dimensions [width, height].
+        required: false
+      - name: time_per_sweep
+        dtype: numeric
+        doc: Time to conduct a sweep (in milliseconds) if spatially modulated during stimulation.
+        required: false
+      - name: number_of_sweeps
+        dtype: numeric
+        doc:
+          Repetition of a sweep pattern for a single stimulation instance if spatially
+          modulated during stimulation.
+        required: false
+      - name: inter_sweep_interval
+        dtype: numeric
+        doc: duration of the interval between each individual numeric, in sec
+        required: false
+  - neurodata_type_def: SpiralScanning
+    neurodata_type_inc: OptogeneticStimulusPattern
+    doc: table of parameters defining the spiral scanning beam pattern
+    attributes:
+      - name: diameter
+        dtype: numeric
+        doc: spiral diameter of each spot (in micrometers)
+        required: false
+      - name: height
+        dtype: numeric
+        doc: spiral height of each spot (in micrometers)
+        required: false
+      - name: number_of_revolutions
+        dtype: numeric
+        doc: number of turns within a spiral
+        required: false
+  - neurodata_type_def: TemporalFocusing
+    neurodata_type_inc: OptogeneticStimulusPattern
+    doc: table of parameters defining the temporal focusing beam-shaping
+    attributes:
+      - name: lateral_point_spread_function
+        dtype: text
+        doc:
+          estimated lateral spatial profile or point spread function, expressed as
+          mean [um] ± s.d [um]
+        required: false
+      - name: axial_point_spread_function
+        dtype: text
+        doc:
+          estimated axial spatial profile or point spread function, expressed as mean
+          [um]± s.d [um]
+        required: false
+  - neurodata_type_def: PatternedOptogeneticMethod
+    neurodata_type_inc: OptogeneticStimulusSite
+    doc: An extension of OptogeneticStimulusSite to include methods used to apply patterned photostimulation.
+    attributes:
+      - name: effector
+        dtype: text
+        doc: Light-activated effector protein expressed by the targeted cell (eg. ChR2)
+        required: false
+    links:
+      - name: stimulus_pattern
+        target_type: OptogeneticStimulusPattern
+        doc: link to the stimulus pattern
+        required: false
+      - name: spatial_light_modulator
+        target_type: SpatialLightModulator
+        doc: the spatial light modulator device
+        required: false
+      - name: light_source
+        target_type: LightSource
+        doc: the light source
+        required: false
+  - neurodata_type_def: SpatialLightModulator
+    neurodata_type_inc: Device
+    doc: An extension of Device to include the Spatial Light Modulator metadata
+    attributes:
+      - name: model
+        dtype: text
+        doc: Name of the SLM used in experiment.
+        required: false
+      - name: size
+        dtype: numeric
+        dims:
+          - - width
+            - height
+          - - width
+            - height
+            - depth
+        shape:
+          - - 2
+          - - 3
+        doc:
+          Resolution of SpatialLightModulator (in pixels), formatted as [width, height]
+          or [width, height, depth].
+        required: false
+  - neurodata_type_def: LightSource
+    neurodata_type_inc: Device
+    doc: An extension of Device to include the Light Sorce metadata
+    attributes:
+      - name: model
+        dtype: text
+        doc: Name of the laser used in experiment.
+        required: false
+      - name: stimulation_wavelength
+        dtype: numeric
+        doc: wavelength of stimulation light (in nanometers)
+        required: false
+      - name: filter_description
+        dtype: text
+        doc: filter_description
+        required: false
+      - name: peak_power
+        dtype: numeric
+        doc: peak power of the stimulation in W, if known
+        required: false
+      - name: intensity
+        dtype: numeric
+        doc: intensity of the excitation in W/m^2, if known.
+        required: false
+      - name: exposure_time
+        dtype: numeric
+        doc: exposure time of the sample
+        required: false
+      - name: pulse_rate
+        dtype: numeric
+        doc: pulse rate of the light source, if the light source is a pulsed laser
+        required: false
+  - neurodata_type_def: Hologram
+    neurodata_type_inc: LabMetaData
+    doc: container to hold hologram as a roi_table_region
+    quantity: '?'
+    datasets:  
+      - name: rois
+        neurodata_type_inc: DynamicTableRegion
+        doc: references rows of ROI table
+  - neurodata_type_def: PatternedOptogeneticStimulusTable
+    neurodata_type_inc: TimeIntervals
+    doc: Table to hold all of an experiment's patterned optogenetic stimulus onsets.
+    quantity: '?'
+    datasets:
+      - name: power_per_target
+        neurodata_type_inc: VectorData
+        dtype: numeric 
+        doc: Power (in Watts) applied to each target during patterned photostimulation.
+        required: false
+      - name: method
+        neurodata_type_inc: VectorData
+        dtype: 
+          target_type: PatternedOptogeneticMethod
+          reftype: object
+        doc: method used to apply patterned photostimulation.
+        required: false
+      - name: hologram
+        neurodata_type_inc: VectorData
+        dtype: 
+          target_type: Hologram
+          reftype: object
+        doc: references rows of ROI table

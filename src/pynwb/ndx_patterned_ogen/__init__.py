@@ -22,7 +22,13 @@ load_namespaces(str(__spec_path))
 # Either have PyNWB generate a class from the spec using `get_class` as shown
 # below or write a custom class and register it using the class decorator
 # `@register_class("TetrodeSeries", "ndx-patterned-ogen")`
-TetrodeSeries = get_class("TetrodeSeries", "ndx-patterned-ogen")
-
+OptogeneticStimulusPattern = get_class("OptogeneticStimulusPattern", "ndx-patterned-ogen")
+PatternedOptogeneticMethod = get_class("PatternedOptogeneticMethod", "ndx-patterned-ogen")
+PatternedOptogeneticStimulusTable = get_class("PatternedOptogeneticStimulusTable", "ndx-patterned-ogen")
+SpiralScanning = get_class("SpiralScanning", "ndx-patterned-ogen")
+TemporalFocusing = get_class("TemporalFocusing", "ndx-patterned-ogen")
+SpatialLightModulator = get_class("SpatialLightModulator", "ndx-patterned-ogen")
+LightSource = get_class("LightSource", "ndx-patterned-ogen")
+Hologram = get_class("Hologram", "ndx-patterned-ogen")
 # Remove these functions from the package
 del load_namespaces, get_class
