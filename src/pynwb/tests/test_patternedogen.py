@@ -62,7 +62,6 @@ class TestPatternedOgenConstructor(TestCase):
         np.testing.assert_array_equal(stimulus_table.power_per_target[:], [power_per_target])
 
 
-
 class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
     """Simple roundtrip test for PatternedOptogeneticStimulusTable."""
 

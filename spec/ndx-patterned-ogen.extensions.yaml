@@ -139,31 +139,31 @@ groups:
   - neurodata_type_def: Hologram
     neurodata_type_inc: LabMetaData
     doc: container to hold hologram as a roi_table_region
-    quantity: '?'
-    datasets:  
+    quantity: "?"
+    datasets:
       - name: rois
         neurodata_type_inc: DynamicTableRegion
         doc: references rows of ROI table
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
     doc: Table to hold all of an experiment's patterned optogenetic stimulus onsets.
-    quantity: '?'
+    quantity: "?"
     datasets:
       - name: power_per_target
         neurodata_type_inc: VectorData
-        dtype: numeric 
+        dtype: numeric
         doc: Power (in Watts) applied to each target during patterned photostimulation.
         required: false
       - name: method
         neurodata_type_inc: VectorData
-        dtype: 
+        dtype:
           target_type: PatternedOptogeneticMethod
           reftype: object
         doc: method used to apply patterned photostimulation.
         required: false
       - name: hologram
         neurodata_type_inc: VectorData
-        dtype: 
+        dtype:
           target_type: Hologram
           reftype: object
         doc: references rows of ROI table

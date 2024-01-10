@@ -1,21 +1,21 @@
 namespaces:
-- author:
-  - Alessandra Trapani
-  contact:
-  - alessandra.trapani@catalystneuro
-  doc: patterned (holographic) optogenetic extension to NWB standard
-  name: ndx-patterned-ogen
-  schema:
-  - namespace: core
-    neurodata_types:
-    - TimeIntervals
-    - Device
-    - OptogeneticStimulusSite
-    - LabMetaData
-  - namespace: hdmf-common
-    neurodata_types:
-    - DynamicTableRegion
-    - DynamicTable
-    - VectorData
-  - source: ndx-patterned-ogen.extensions.yaml
-  version: 0.1.0
+  - author:
+      - Alessandra Trapani
+    contact:
+      - alessandra.trapani@catalystneuro
+    doc: patterned (holographic) optogenetic extension to NWB standard
+    name: ndx-patterned-ogen
+    schema:
+      - namespace: core
+        neurodata_types:
+          - TimeIntervals
+          - Device
+          - OptogeneticStimulusSite
+          - LabMetaData
+      - namespace: hdmf-common
+        neurodata_types:
+          - DynamicTableRegion
+          - DynamicTable
+          - VectorData
+      - source: ndx-patterned-ogen.extensions.yaml
+    version: 0.1.0
