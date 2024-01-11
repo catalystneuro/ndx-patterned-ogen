@@ -1,8 +1,148 @@
 groups:
-- neurodata_type_def: TetrodeSeries
-  neurodata_type_inc: ElectricalSeries
-  doc: An extension of ElectricalSeries to include the tetrode ID for each time series.
-  attributes:
-  - name: trode_id
-    dtype: int32
-    doc: The tetrode ID.
+  - neurodata_type_def: OptogeneticStimulusPattern
+    neurodata_type_inc: LabMetaData
+    doc: Container to store the information about a generic stimulus pattern (spatial information)
+    attributes:
+      - name: description
+        dtype: text
+        doc: Scanning or scanless method for shaping optogenetic light (ex., diffraction limited points,3D shot, disks, etc.).
+      - name: sweep_size
+        dtype: numeric
+        doc:
+          Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is
+          assumed to be a circle (for 2D patterns) or cylinder (for 3D patterns), with diameter 'sweep_size'.
+          If 'sweep_size' is a two or three dimensional array, the the sweep pattern is assumed to be a
+          rectangle or cuboid, with dimensions [width, height] or [width, height, depth].
+      - name: sweep_mask
+        dtype: numeric
+        doc:
+          Scanning sweep pattern designated using a mask of size [width, height] (2D stimulation) or [width,
+          height, depth] (3D stimulation), where for a given pixel a value of 1 indicates stimulation, and a
+          value of 0 indicates no stimulation.
+  - neurodata_type_def: SpiralScanning
+    neurodata_type_inc: LabMetaData
+    doc: Container to store the parameters defining a spiral scanning pattern
+    attributes:
+      - name: description
+        dtype: text
+        doc: description of the pattern
+      - name: diameter
+        dtype: numeric
+        doc: spiral diameter of each sweep (in micrometers)
+      - name: height
+        dtype: numeric
+        doc: spiral height of each sweep (in micrometers)
+      - name: number_of_revolutions
+        dtype: numeric
+        doc: number of turns within a spiral
+  - neurodata_type_def: TemporalFocusing
+    neurodata_type_inc: LabMetaData
+    doc: Container to store the parameters defining a temporal focusing beam-shaping
+    attributes:
+      - name: description
+        dtype: text
+        doc: description of the pattern
+      - name: lateral_point_spread_function
+        dtype: text
+        doc:
+          estimated lateral spatial profile or point spread function, expressed as
+          mean [um] ± s.d [um]
+      - name: axial_point_spread_function
+        dtype: text
+        doc:
+          estimated axial spatial profile or point spread function, expressed as mean
+          [um]± s.d [um]
+  - neurodata_type_def: PatternedOptogeneticStimulusSite
+    neurodata_type_inc: OptogeneticStimulusSite
+    doc: Patterned optogenetic stimulus site.
+    attributes:
+      - name: effector
+        dtype: text
+        doc: Light-activated effector protein expressed by the targeted cell (eg. ChR2)
+    links:
+      - name: spatial_light_modulator
+        target_type: SpatialLightModulator
+        doc: SpatialLightModulator used to generate holographic pattern.
+      - name: light_source
+        target_type: LightSource
+        doc: LightSource used to apply photostimulation.
+  - neurodata_type_def: SpatialLightModulator
+    neurodata_type_inc: Device
+    doc: Spatial light modulator used in the experiment.
+    attributes:
+      - name: model
+        dtype: text
+        doc: Model of SpatialLightModulator.
+      - name: size
+        dtype: numeric
+        doc:
+          Resolution of SpatialLightModulator (in pixels), formatted as [width, height]
+          or [width, height, depth].
+        required: false
+  - neurodata_type_def: LightSource
+    neurodata_type_inc: Device
+    doc: Light source used in the experiment.
+    attributes:
+      - name: model
+        dtype: text
+        doc: Model of LightSource.
+      - name: stimulation_wavelength
+        dtype: numeric
+        doc: Excitation wavelength of stimulation light (nanometers).
+      - name: peak_power
+        dtype: numeric
+        doc: Incident power of stimulation device (in Watts).
+      - name: peak_pulse_energy
+        dtype: numeric
+        doc: If device is pulsed laser, pulse energy (in Joules).
+      - name: intensity
+        dtype: numeric
+        doc: intensity of the excitation in W/m^2, if known.
+      - name: exposure_time
+        dtype: numeric
+        doc: exposure time of the sample
+      - name: pulse_rate
+        dtype: numeric
+        doc: If device is pulsed laser, pulse rate (in Hz) used for stimulation.
+  - neurodata_type_def: OptogeneticStimulusTarget
+    neurodata_type_inc: LabMetaData
+    doc: Container to store the targated rois in a photostimulation experiment.
+    datasets:
+      - name: stimulated_rois
+        neurodata_type_inc: DynamicTableRegion
+        doc: a table region corresponding to the ROIs that were targeted and stimulated      
+      - name: additional_targeted_rois
+        neurodata_type_inc: numeric
+        doc: additional targeted ROIs designated as a list specifying the pixel ([x1, y1], [x2, y2], …) or voxel ([x1, y1, z1], [x2, y2, z2], …) centroid of each ROI
+  - neurodata_type_def: PatternedOptogeneticStimulusTable
+    neurodata_type_inc: TimeIntervals
+    doc: Table to hold all of an experiment's patterned optogenetic stimulus onsets.
+    quantity: "?"
+    datasets:
+      - name: power
+        neurodata_type_inc: VectorData
+        doc: Power (in Watts) applied to each target during patterned photostimulation.
+      - name: frequency
+        neurodata_type_inc: VectorData
+        doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz)
+      - name: pulse_width
+        neurodata_type_inc: VectorData
+        doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase
+      - name: targets
+        neurodata_type_inc: VectorData
+        dtype:
+          target_type: OptogeneticStimulusTarget
+          reftype: object
+        doc: Targeted rois for the stimulus onset
+      - name: stimulus_pattern
+        neurodata_type_inc: VectorData
+        dtype:
+          target_type: LabMetaData
+          reftype: object
+        doc: link to the stimulus pattern
+      - name: stimulus_site
+        neurodata_type_inc: VectorData
+        dtype:
+          target_type: PatternedOptogeneticStimulusSite
+          reftype: object
+        doc: link to the stimulus site

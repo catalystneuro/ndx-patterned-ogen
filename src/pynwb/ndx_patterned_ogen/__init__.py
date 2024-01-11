@@ -18,11 +18,14 @@ if not os.path.exists(__spec_path):
 # Load the namespace
 load_namespaces(str(__spec_path))
 
-# TODO: Define your classes here to make them accessible at the package level.
-# Either have PyNWB generate a class from the spec using `get_class` as shown
-# below or write a custom class and register it using the class decorator
-# `@register_class("TetrodeSeries", "ndx-patterned-ogen")`
-TetrodeSeries = get_class("TetrodeSeries", "ndx-patterned-ogen")
-
-# Remove these functions from the package
-del load_namespaces, get_class
+from .patterned_ogen import (
+    SpatialLightModulator,
+    LightSource,
+    PatternedOptogeneticStimulusSite,
+    PatternedOptogeneticStimulusTable,
+    OptogeneticStimulusPattern,
+    OptogeneticStimulusSite,
+    OptogeneticStimulusTarget,
+    SpiralScanning,
+    TemporalFocusing,
+)
