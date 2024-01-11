@@ -111,7 +111,7 @@ def mock_LightSource(
 def mock_SpatialLightModulator(
     name: Optional[str] = None,
     description: str = "Generic description for the spatial light modulator device",
-    model: Optional[str] = None,
+    model: str = "Generic model for the spatial light modulator device",
     manufacturer: Optional[str] = None,
     size: list = [100, 100],
     nwbfile: Optional[NWBFile] = None,
@@ -158,7 +158,7 @@ def mock_PatternedOptogeneticStimulusSite(
 def mock_OptogeneticStimulusTarget(
     name: Optional[str] = None,
     stimulated_rois=None,
-    additional_targeted_rois=[[0,0],[1,1]],
+    additional_targeted_rois=np.array([[0,0],[1,1]]),
     n_rois: int = 10,
     plane_segmentation: Optional[PlaneSegmentation] = None,
     nwbfile: Optional[NWBFile] = None,
@@ -171,9 +171,9 @@ def mock_OptogeneticStimulusTarget(
             description="stimulated_rois",
             table=plane_segmentation or mock_PlaneSegmentation(n_rois=n_rois, nwbfile=nwbfile),
             data=list(range(n_rois)),
-        ),
-    )
+        ),    
     additional_targeted_rois=additional_targeted_rois
+    )
     nwbfile.add_lab_meta_data(hologram)
     return hologram
 
@@ -183,7 +183,7 @@ def mock_PatternedOptogeneticStimulusTable(
     description: str = "no description",
     start_time: list = [0.0, 0.1, 0.2],
     stop_time: list = [0.7, 0.8, 0.9],
-    power_per_target: list = [700.0, 800.0, 900.0],
+    power: list = [700.0, 800.0, 900.0],
     frequency: list = [7.0, 8.0, 9.0],
     pulse_width: list = [0.1, 0.1, 0.1],
     stimulus_pattern: list = [None, None, None],
@@ -198,7 +198,7 @@ def mock_PatternedOptogeneticStimulusTable(
         optogenetic_stimulus_table.add_interval(
             start_time=start,
             stop_time=stop_time[i],
-            power_per_target=power_per_target[i],
+            power=power[i],
             frequency=frequency[i],
             pulse_width=pulse_width[i],
             stimulus_pattern=stimulus_pattern[i] or mock_OptogeneticStimulusPattern(nwbfile=nwbfile),

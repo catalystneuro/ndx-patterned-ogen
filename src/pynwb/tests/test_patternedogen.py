@@ -9,7 +9,7 @@ from pynwb.testing.mock.file import mock_NWBFile
 from pynwb.testing import TestCase, remove_test_file, NWBH5IOFlexMixin
 
 from ndx_patterned_ogen import PatternedOptogeneticStimulusTable
-from mock.patternedogen import (
+from .mock.patternedogen import (
     mock_OptogeneticStimulusPattern,
     mock_OptogeneticStimulusTarget,
     mock_PatternedOptogeneticStimulusSite,
@@ -45,19 +45,19 @@ class TestPatternedOgenConstructor(TestCase):
 
         start_time = 0.0
         stop_time = 1.0
-        power_per_target = 700.0
+        power = 70.0
         frequency = 20.0
         pulse_width = 0.1
 
         stimulus_table.add_interval(
             start_time=start_time,
             stop_time=stop_time,
-            power_per_target=power_per_target,
+            power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern,
-            targets=mock_OptogeneticStimulusTarget,
-            stimulus_site=mock_PatternedOptogeneticStimulusSite,
+            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile),
+            stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
 
         self.assertEqual(stimulus_table.name, "PatternedOptogeneticStimulusTable")
@@ -88,19 +88,19 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
 
         start_time = 0.0
         stop_time = 1.0
-        power_per_target = 700.0
+        power = 70.0
         frequency = 20.0
         pulse_width = 0.1
 
         stimulus_table.add_interval(
             start_time=start_time,
             stop_time=stop_time,
-            power_per_target=power_per_target,
+            power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern,
-            targets=mock_OptogeneticStimulusTarget,
-            stimulus_site=mock_PatternedOptogeneticStimulusSite,
+            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile),
+            stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
 
         self.nwbfile.add_time_intervals(stimulus_table)
@@ -129,19 +129,19 @@ class TestPatternedOptogeneticStimulusTableRoundtripPyNWB(NWBH5IOFlexMixin, Test
 
         start_time = 0.0
         stop_time = 1.0
-        power_per_target = 700.0
+        power = 70.0
         frequency = 20.0
         pulse_width = 0.1
 
         stimulus_table.add_interval(
             start_time=start_time,
             stop_time=stop_time,
-            power_per_target=power_per_target,
+            power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern,
-            targets=mock_OptogeneticStimulusTarget,
-            stimulus_site=mock_PatternedOptogeneticStimulusSite,
+            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile),
+            stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
 
         self.nwbfile.add_time_intervals(stimulus_table)

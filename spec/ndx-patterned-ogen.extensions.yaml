@@ -110,9 +110,9 @@ groups:
     datasets:
       - name: stimulated_rois
         neurodata_type_inc: DynamicTableRegion
-        doc: a table region corresponding to the ROIs that were targeted and stimulated      
+        doc: a table region corresponding to the ROIs that were targeted and stimulated     
       - name: additional_targeted_rois
-        neurodata_type_inc: numeric
+        dtype: numeric
         doc: additional targeted ROIs designated as a list specifying the pixel ([x1, y1], [x2, y2], …) or voxel ([x1, y1, z1], [x2, y2, z2], …) centroid of each ROI
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
