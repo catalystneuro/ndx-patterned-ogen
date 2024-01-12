@@ -1,14 +1,9 @@
 from collections.abc import Iterable
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from hdmf.utils import docval, getargs, popargs, popargs_to_dict, get_docval
+from hdmf.utils import docval, popargs_to_dict, get_docval
 from pynwb import register_class
-from pynwb.base import TimeSeries
-from pynwb.core import DynamicTable, DynamicTableRegion, VectorData
+from pynwb.core import DynamicTableRegion
 from pynwb.device import Device
-from pynwb.file import NWBContainer, LabMetaData, TimeIntervals
+from pynwb.file import LabMetaData, TimeIntervals
 from pynwb.ogen import OptogeneticStimulusSite
 
 namespace = "ndx-patterned-ogen"
