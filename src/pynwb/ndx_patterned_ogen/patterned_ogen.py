@@ -239,7 +239,7 @@ class OptogeneticStimulusPattern(LabMetaData):
         },
         {
             "name": "sweep_mask",
-            "type": "array_data",
+            "type": Iterable,
             "doc": (
                 "Scanning sweep pattern designated using a mask of size [width, height] (2D stimulation) or [width,"
                 " height, depth] (3D stimulation), where for a given pixel a value of 1 indicates stimulation, and a"
@@ -352,10 +352,15 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             "description": "Power (in Watts) applied to each target during patterned photostimulation.",
             "required": True,
         },
-        {"name": "frequency", "description": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz)"},
+        {
+            "name": "frequency",
+            "description": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz)",
+            "required": False,
+        },
         {
             "name": "pulse_width",
             "description": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase",
+            "required": False,
         },
         {"name": "targets", "description": "Targeted rois for the stimulus onset", "required": True},
         {
@@ -400,16 +405,19 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             "name": "power",
             "doc": "Power (in Watts) applied to each target during patterned photostimulation.",
             "type": (int, float, Iterable),
+            "default": 0.0,
         },
         {
             "name": "frequency",
             "doc": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz)",
             "type": (int, float, Iterable),
+            "default": 0.0,
         },
         {
             "name": "pulse_width",
             "doc": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase",
             "type": (int, float, Iterable),
+            "default": 0.0,
         },
         {
             "name": "targets",
