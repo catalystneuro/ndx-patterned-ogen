@@ -6,6 +6,7 @@ groups:
       - name: description
         dtype: text
         doc: Scanning or scanless method for shaping optogenetic light (ex., diffraction limited points,3D shot, disks, etc.).
+        required: false
       - name: sweep_size
         dtype: numeric
         doc:
@@ -13,12 +14,14 @@ groups:
           assumed to be a circle (for 2D patterns) or cylinder (for 3D patterns), with diameter 'sweep_size'.
           If 'sweep_size' is a two or three dimensional array, the the sweep pattern is assumed to be a
           rectangle or cuboid, with dimensions [width, height] or [width, height, depth].
+        required: false
       - name: sweep_mask
         dtype: numeric
         doc:
           Scanning sweep pattern designated using a mask of size [width, height] (2D stimulation) or [width,
           height, depth] (3D stimulation), where for a given pixel a value of 1 indicates stimulation, and a
           value of 0 indicates no stimulation.
+        required: false
   - neurodata_type_def: SpiralScanning
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a spiral scanning pattern
@@ -26,12 +29,14 @@ groups:
       - name: description
         dtype: text
         doc: description of the pattern
+        required: false
       - name: diameter
         dtype: numeric
         doc: spiral diameter of each sweep (in micrometers)
       - name: height
         dtype: numeric
         doc: spiral height of each sweep (in micrometers)
+        required: false
       - name: number_of_revolutions
         dtype: numeric
         doc: number of turns within a spiral
@@ -42,6 +47,7 @@ groups:
       - name: description
         dtype: text
         doc: description of the pattern
+        required: false
       - name: lateral_point_spread_function
         dtype: text
         doc:
@@ -73,6 +79,7 @@ groups:
       - name: model
         dtype: text
         doc: Model of SpatialLightModulator.
+        required: false
       - name: size
         dtype: numeric
         doc:
@@ -86,34 +93,42 @@ groups:
       - name: model
         dtype: text
         doc: Model of LightSource.
+        required: false
       - name: stimulation_wavelength
         dtype: numeric
         doc: Excitation wavelength of stimulation light (nanometers).
       - name: peak_power
         dtype: numeric
         doc: Incident power of stimulation device (in Watts).
+        required: false
       - name: peak_pulse_energy
         dtype: numeric
         doc: If device is pulsed laser, pulse energy (in Joules).
+        required: false
       - name: intensity
         dtype: numeric
         doc: intensity of the excitation in W/m^2, if known.
+        required: false
       - name: exposure_time
         dtype: numeric
         doc: exposure time of the sample
+        required: false
       - name: pulse_rate
         dtype: numeric
         doc: If device is pulsed laser, pulse rate (in Hz) used for stimulation.
+        required: false
   - neurodata_type_def: OptogeneticStimulusTarget
     neurodata_type_inc: LabMetaData
     doc: Container to store the targated rois in a photostimulation experiment.
     datasets:
       - name: stimulated_rois
         neurodata_type_inc: DynamicTableRegion
-        doc: a table region corresponding to the ROIs that were targeted and stimulated     
+        doc: a table region corresponding to the ROIs that were targeted and stimulated  
+    attributes:   
       - name: additional_targeted_rois
         dtype: numeric
         doc: additional targeted ROIs designated as a list specifying the pixel ([x1, y1], [x2, y2], …) or voxel ([x1, y1, z1], [x2, y2, z2], …) centroid of each ROI
+        required: false
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
     doc: Table to hold all of an experiment's patterned optogenetic stimulus onsets.
@@ -125,9 +140,11 @@ groups:
       - name: frequency
         neurodata_type_inc: VectorData
         doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz)
+        required: false
       - name: pulse_width
         neurodata_type_inc: VectorData
         doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase
+        required: false
       - name: targets
         neurodata_type_inc: VectorData
         dtype:

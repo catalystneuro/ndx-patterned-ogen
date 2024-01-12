@@ -177,7 +177,10 @@ class OptogeneticStimulusTarget(LabMetaData):
     Container to store the targated rois in a photostimulation experiment.
     """
 
-    __nwbfields__ = ({"name": "stimulated_rois", "child": True},"additional_targeted_rois")
+    __nwbfields__ = (
+        {"name": "stimulated_rois", "child": True},
+        "additional_targeted_rois",
+    )
 
     @docval(
         *get_docval(LabMetaData.__init__, "name"),
@@ -198,7 +201,7 @@ class OptogeneticStimulusTarget(LabMetaData):
         },
     )
     def __init__(self, **kwargs):
-        keys_to_set = ("stimulated_rois","additional_targeted_rois")
+        keys_to_set = ("stimulated_rois", "additional_targeted_rois")
         args_to_set = popargs_to_dict(keys_to_set, kwargs)
         super().__init__(**kwargs)
         for key, val in args_to_set.items():
