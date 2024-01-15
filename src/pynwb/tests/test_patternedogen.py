@@ -127,9 +127,9 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
         start_time = 0.0
         stop_time = 1.0
         targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
-        power=np.random.uniform(50e-3, 70e-3, targets.stimulated_rois.shape[0])
-        frequency=np.random.uniform(20.0, 100.0, targets.stimulated_rois.shape[0])
-        pulse_width=np.random.uniform(0.1, 0.2, targets.stimulated_rois.shape[0])
+        power=np.random.uniform(50e-3, 70e-3, targets.segmented_rois.shape[0])
+        frequency=np.random.uniform(20.0, 100.0, targets.segmented_rois.shape[0])
+        pulse_width=np.random.uniform(0.1, 0.2, targets.segmented_rois.shape[0])
 
         stimulus_table.add_interval(
             start_time=start_time,

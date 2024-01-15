@@ -121,14 +121,14 @@ groups:
     neurodata_type_inc: LabMetaData
     doc: Container to store the targated rois in a photostimulation experiment.
     datasets:
-      - name: stimulated_rois
+      - name: segmented_rois
         neurodata_type_inc: DynamicTableRegion
         doc: a table region corresponding to the ROIs that were targeted and stimulated  
-    attributes:   
-      - name: additional_targeted_rois
-        dtype: numeric
-        doc: additional targeted ROIs designated as a list specifying the pixel ([x1, y1], [x2, y2], …) or voxel ([x1, y1, z1], [x2, y2, z2], …) centroid of each ROI
         required: false
+    attributes:   
+      - name: targeted_rois
+        dtype: numeric
+        doc: targeted ROIs defined by their centroids, in pixel ([x1, y1], [x2, y2], …) or voxel ([x1, y1, z1], [x2, y2, z2], …) 
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
     doc: Table to hold all of an experiment's patterned optogenetic stimulus onsets.

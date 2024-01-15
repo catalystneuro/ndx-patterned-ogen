@@ -30,7 +30,7 @@ def mock_OptogeneticStimulusPattern(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus pattern",
     sweep_size: float = 5,  # um
-    sweep_mask = np.zeros((10,10)),  
+    sweep_mask=np.zeros((10, 10)),
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulusPattern:
     stimulus_pattern = OptogeneticStimulusPattern(
@@ -86,7 +86,7 @@ def mock_LightSource(
     stimulation_wavelength: float = 1035.0,  # nm
     description: str = "Generic description for the laser",
     peak_power: float = 0.70,  # the peak power of stimulation in Watts
-    peak_pulse_energy: float = 0.70, 
+    peak_pulse_energy: float = 0.70,
     intensity: float = 0.005,  # the intensity of excitation in W/mm^2
     exposure_time: float = 2.51e-13,  # the exposure time of the sample in seconds
     pulse_rate: float = 2.0e6,  # the pulse rate of the laser is in Hz
@@ -157,22 +157,22 @@ def mock_PatternedOptogeneticStimulusSite(
 
 def mock_OptogeneticStimulusTarget(
     name: Optional[str] = None,
-    stimulated_rois=None,
-    additional_targeted_rois=np.array([[0,0],[1,1]]),
+    segmented_rois: DynamicTableRegion = None,
+    targeted_rois = None,
     n_rois: int = 10,
     plane_segmentation: Optional[PlaneSegmentation] = None,
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulusTarget:
     hologram = OptogeneticStimulusTarget(
         name=name or name_generator("Hologram"),
-        stimulated_rois=stimulated_rois
+        targeted_rois=targeted_rois or np.array([[i, i] for i in range(n_rois)]),
+        segmented_rois=segmented_rois
         or DynamicTableRegion(
-            name="stimulated_rois",
-            description="stimulated_rois",
+            name="segmented_rois",
+            description="segmented_rois",
             table=plane_segmentation or mock_PlaneSegmentation(n_rois=n_rois, nwbfile=nwbfile),
             data=list(range(n_rois)),
-        ),    
-    additional_targeted_rois=additional_targeted_rois
+        ),
     )
     nwbfile.add_lab_meta_data(hologram)
     return hologram

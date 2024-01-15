@@ -173,19 +173,19 @@ class OptogeneticStimulusTarget(LabMetaData):
     """
 
     __nwbfields__ = (
-        {"name": "stimulated_rois", "child": True},
-        "additional_targeted_rois",
+        {"name": "segmented_rois", "child": True},
+        "targeted_rois",
     )
 
     @docval(
         *get_docval(LabMetaData.__init__, "name"),
         {
-            "name": "stimulated_rois",
+            "name": "segmented_rois",
             "type": DynamicTableRegion,
             "doc": "a table region corresponding to the ROIs that were targeted and stimulated",
         },
         {
-            "name": "additional_targeted_rois",
+            "name": "targeted_rois",
             "type": Iterable,
             "doc": (
                 "additional targeted ROIs designated as a list specifying the pixel ([x1, y1], [x2, y2], …) or"
@@ -196,7 +196,7 @@ class OptogeneticStimulusTarget(LabMetaData):
         },
     )
     def __init__(self, **kwargs):
-        keys_to_set = ("stimulated_rois", "additional_targeted_rois")
+        keys_to_set = ("segmented_rois", "targeted_rois")
         args_to_set = popargs_to_dict(keys_to_set, kwargs)
         super().__init__(**kwargs)
         for key, val in args_to_set.items():
