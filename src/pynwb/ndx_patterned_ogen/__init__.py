@@ -29,3 +29,15 @@ from .patterned_ogen import (
     SpiralScanning,
     TemporalFocusing,
 )
+
+__all__ = [
+    "SpatialLightModulator",
+    "LightSource",
+    "PatternedOptogeneticStimulusSite",
+    "PatternedOptogeneticStimulusTable",
+    "OptogeneticStimulusPattern",
+    "OptogeneticStimulusSite",
+    "OptogeneticStimulusTarget",
+    "SpiralScanning",
+    "TemporalFocusing",
+]
