@@ -1,11 +1,11 @@
 groups:
   - neurodata_type_def: OptogeneticStimulusPattern
     neurodata_type_inc: LabMetaData
-    doc: Container to store the information about a generic stimulus pattern (spatial information)
+    doc: Container to store the information about a generic stimulus pattern (spatial information).
     attributes:
       - name: description
         dtype: text
-        doc: Scanning or scanless method for shaping optogenetic light (ex., diffraction limited points,3D shot, disks, etc.).
+        doc: Description of the scanning or scanless method for shaping optogenetic light. Examples include diffraction limited points, 3D shot, disks, etc.
         required: false
       - name: sweep_size
         dtype: numeric
@@ -24,47 +24,47 @@ groups:
         required: false
   - neurodata_type_def: SpiralScanning
     neurodata_type_inc: LabMetaData
-    doc: Container to store the parameters defining a spiral scanning pattern
+    doc: Container to store the parameters defining a spiral scanning pattern.
     attributes:
       - name: description
         dtype: text
-        doc: description of the pattern
+        doc: Description of the pattern.
         required: false
       - name: diameter
         dtype: numeric
-        doc: spiral diameter of each sweep (in micrometers)
+        doc: Spiral diameter of each sweep (in micrometers).
       - name: height
         dtype: numeric
-        doc: spiral height of each sweep (in micrometers)
+        doc: Spiral height of each sweep (in micrometers).
         required: false
       - name: number_of_revolutions
         dtype: numeric
-        doc: number of turns within a spiral
+        doc: Number of turns within a spiral.
   - neurodata_type_def: TemporalFocusing
     neurodata_type_inc: LabMetaData
-    doc: Container to store the parameters defining a temporal focusing beam-shaping
+    doc: Container to store the parameters defining a temporal focusing beam-shaping.
     attributes:
       - name: description
         dtype: text
-        doc: description of the pattern
+        doc: Description of the pattern.
         required: false
       - name: lateral_point_spread_function
         dtype: text
         doc:
-          estimated lateral spatial profile or point spread function, expressed as
-          mean [um] ± s.d [um]
+          Estimated lateral spatial profile or point spread function, expressed as
+          mean [um] ± s.d [um].
       - name: axial_point_spread_function
         dtype: text
         doc:
-          estimated axial spatial profile or point spread function, expressed as mean
-          [um]± s.d [um]
+          Estimated axial spatial profile or point spread function, expressed as mean
+          [um]± s.d [um].
   - neurodata_type_def: PatternedOptogeneticStimulusSite
     neurodata_type_inc: OptogeneticStimulusSite
     doc: Patterned optogenetic stimulus site.
     attributes:
       - name: effector
         dtype: text
-        doc: Light-activated effector protein expressed by the targeted cell (eg. ChR2)
+        doc: Light-activated effector protein expressed by the targeted cell (e.g., ChR2).
     links:
       - name: spatial_light_modulator
         target_type: SpatialLightModulator
@@ -107,7 +107,7 @@ groups:
         required: false
       - name: intensity
         dtype: numeric
-        doc: intensity of the excitation in W/m^2, if known.
+        doc: Intensity of the excitation in W/m^2, if known.
         required: false
       - name: exposure_time
         dtype: numeric
@@ -123,15 +123,15 @@ groups:
     datasets:
       - name: segmented_rois
         neurodata_type_inc: DynamicTableRegion
-        doc: a table region corresponding to the ROIs that were targeted and stimulated  
+        doc: A table region corresponding to the ROIs that were targeted and stimulated.
         required: false
     attributes:   
       - name: targeted_rois
         dtype: numeric
-        doc: targeted ROIs defined by their centroids, in pixel ([x1, y1], [x2, y2], …) or voxel ([x1, y1, z1], [x2, y2, z2], …) 
+        doc: Targeted ROIs defined by their centroids, in pixel ([x1, y1], [x2, y2], ...) or voxel ([x1, y1, z1], [x2, y2, z2], ...).
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
-    doc: Table to hold all of an experiment's patterned optogenetic stimulus onsets.
+    doc: Table to hold all patterned optogenetic stimulus onsets.
     quantity: "?"
     datasets:
       - name: power
@@ -139,27 +139,27 @@ groups:
         doc: Power (in Watts) applied to each target during patterned photostimulation.
       - name: frequency
         neurodata_type_inc: VectorData
-        doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz)
+        doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz).
         required: false
       - name: pulse_width
         neurodata_type_inc: VectorData
-        doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase
+        doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.
         required: false
       - name: targets
         neurodata_type_inc: VectorData
         dtype:
           target_type: OptogeneticStimulusTarget
           reftype: object
-        doc: Targeted rois for the stimulus onset
+        doc: Targeted rois for the stimulus onset.
       - name: stimulus_pattern
         neurodata_type_inc: VectorData
         dtype:
           target_type: LabMetaData
           reftype: object
-        doc: link to the stimulus pattern
+        doc: Link to the stimulus pattern.
       - name: stimulus_site
         neurodata_type_inc: VectorData
         dtype:
           target_type: PatternedOptogeneticStimulusSite
           reftype: object
-        doc: link to the stimulus site
+        doc: Link to the stimulus site.
