@@ -1,12 +1,7 @@
 from typing import Optional
 import numpy as np
-from pynwb.testing.mock.file import mock_NWBFile
 from pynwb.testing.mock.device import mock_Device
-from pynwb.testing.mock.ophys import (
-    mock_ImagingPlane,
-    mock_OpticalChannel,
-    mock_PlaneSegmentation,
-)
+from pynwb.testing.mock.ophys import mock_PlaneSegmentation
 from pynwb.testing.mock.utils import name_generator
 from hdmf.common.table import DynamicTableRegion
 from pynwb import NWBFile
@@ -158,7 +153,7 @@ def mock_PatternedOptogeneticStimulusSite(
 def mock_OptogeneticStimulusTarget(
     name: Optional[str] = None,
     segmented_rois: DynamicTableRegion = None,
-    targeted_rois = None,
+    targeted_rois=None,
     n_rois: int = 10,
     plane_segmentation: Optional[PlaneSegmentation] = None,
     nwbfile: Optional[NWBFile] = None,

@@ -13,18 +13,12 @@ from .mock.patternedogen import (
     mock_OptogeneticStimulusPattern,
     mock_OptogeneticStimulusTarget,
     mock_PatternedOptogeneticStimulusSite,
-    mock_SpiralScanning,
-    mock_TemporalFocusing,
-    mock_LightSource,
-    mock_SpatialLightModulator,
-    mock_PatternedOptogeneticStimulusTable,
 )
 
 
 def set_up_nwbfile(nwbfile: NWBFile = None):
     """Create an NWBFile with a Device"""
     nwbfile = nwbfile or mock_NWBFile()
-    device = mock_Device(nwbfile=nwbfile)
     return nwbfile
 
 
@@ -115,8 +109,9 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
 
     def test_roundtrip_power_as_array(self):
         """
-        Add a PatternedOptogeneticStimulusTable to an NWBFile, write it to file, read the file, and test that the PatternedOptogeneticStimulusTable from the
-        file matches the original PatternedOptogeneticStimulusTable.
+        Add a PatternedOptogeneticStimulusTable to an NWBFile, write it 
+        to file, read the file, and test that the PatternedOptogeneticStimulusTable 
+        from the file matches the original PatternedOptogeneticStimulusTable.
         """
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -126,10 +121,10 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
 
         start_time = 0.0
         stop_time = 1.0
-        targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
-        power=np.random.uniform(50e-3, 70e-3, targets.segmented_rois.shape[0])
-        frequency=np.random.uniform(20.0, 100.0, targets.segmented_rois.shape[0])
-        pulse_width=np.random.uniform(0.1, 0.2, targets.segmented_rois.shape[0])
+        targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
+        power = np.random.uniform(50e-3, 70e-3, targets.segmented_rois.shape[0])
+        frequency = np.random.uniform(20.0, 100.0, targets.segmented_rois.shape[0])
+        pulse_width = np.random.uniform(0.1, 0.2, targets.segmented_rois.shape[0])
 
         stimulus_table.add_interval(
             start_time=start_time,
@@ -150,8 +145,13 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
         with NWBHDF5IO(self.path, mode="r", load_namespaces=True) as io:
             read_nwbfile = io.read()
             self.assertContainerEqual(stimulus_table, read_nwbfile.intervals["PatternedOptogeneticStimulusTable"])
+
+
 class TestPatternedOptogeneticStimulusTableRoundtripPyNWB(NWBH5IOFlexMixin, TestCase):
-    """Complex, more complete roundtrip test for PatternedOptogeneticStimulusTable using pynwb.testing infrastructure."""
+    """
+    Complex, more complete roundtrip test for PatternedOptogeneticStimulusTable 
+    using pynwb.testing infrastructure.
+    """
 
     def getContainerType(self):
         return "PatternedOptogeneticStimulusTable"
