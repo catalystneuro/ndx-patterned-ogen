@@ -4,7 +4,6 @@
 import numpy as np
 
 from pynwb import NWBHDF5IO, NWBFile
-from pynwb.testing.mock.device import mock_Device
 from pynwb.testing.mock.file import mock_NWBFile
 from pynwb.testing import TestCase, remove_test_file, NWBH5IOFlexMixin
 
@@ -72,7 +71,8 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
 
     def test_roundtrip(self):
         """
-        Add a PatternedOptogeneticStimulusTable to an NWBFile, write it to file, read the file, and test that the PatternedOptogeneticStimulusTable from the
+        Add a PatternedOptogeneticStimulusTable to an NWBFile, write it to file, 
+        read the file, and test that the PatternedOptogeneticStimulusTable from the
         file matches the original PatternedOptogeneticStimulusTable.
         """
 
