@@ -59,7 +59,7 @@ groups:
         dtype: text
         doc:
           Estimated axial spatial profile or point spread function, expressed as mean
-          [um]± s.d [um].
+          [um] ± s.d [um].
   - neurodata_type_def: PatternedOptogeneticStimulusSite
     neurodata_type_inc: OptogeneticStimulusSite
     doc: Patterned optogenetic stimulus site.
