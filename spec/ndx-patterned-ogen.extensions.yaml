@@ -76,22 +76,32 @@ groups:
         doc: Light source used to apply photostimulation.
         required: true
       - name: spatial_light_modulator
-        target_type: SpatialLightModulator
-        doc: Spatial light modulator used to generate holographic pattern.
+        target_type: Device
+        doc: Spatial light modulator used to generate photostimulation pattern.
         required: false
-  - neurodata_type_def: SpatialLightModulator
+  - neurodata_type_def: SpatialLightModulator2D
     neurodata_type_inc: Device
-    doc: Spatial light modulator used in the experiment.
+    doc:  2D spatial light modulator used in the experiment.
+    attributes:
+      - name: model
+        dtype: text
+        doc: The model specification of the spatial light modulator (e.g. 'X15213 series', from Hamamatsu).
+        required: false
+      - name: spatial_resolution
+        dtype: numeric
+        doc: Resolution of spatial light modulator (in pixels), formatted as [width, height].
+        required: false
+  - neurodata_type_def: SpatialLightModulator3D
+    neurodata_type_inc: Device
+    doc: 3D spatial light modulator used in the experiment.
     attributes:
       - name: model
         dtype: text
         doc: The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker).
         required: false
-      - name: size
+      - name: spatial_resolution
         dtype: numeric
-        doc:
-          Resolution of spatial light modulator (in pixels), formatted as [width, height]
-          or [width, height, depth].
+        doc: Resolution of spatial light modulator (in pixels), formatted as [width, height, depth].
         required: false
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
@@ -103,7 +113,7 @@ groups:
         required: true
       - name: model
         dtype: text
-        doc: Model of light source device. 
+        doc: Model of light source device.
         required: false
       - name: filter_description
         dtype: text

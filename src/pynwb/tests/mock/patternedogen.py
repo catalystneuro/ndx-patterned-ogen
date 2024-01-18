@@ -16,7 +16,8 @@ from ndx_patterned_ogen import (
     OptogeneticStimulusPattern,
     SpiralScanning,
     TemporalFocusing,
-    SpatialLightModulator,
+    SpatialLightModulator3D,
+    SpatialLightModulator2D,
     LightSource,
 )
 
@@ -105,30 +106,47 @@ def mock_LightSource(
     return light_source
 
 
-def mock_SpatialLightModulator(
+def mock_SpatialLightModulator2D(
     name: Optional[str] = None,
     description: str = "Generic description for the spatial light modulator device",
     model: str = "Generic model for the spatial light modulator device",
     manufacturer: Optional[str] = None,
-    size: list = [100, 100],
+    spatial_resolution: list = [100, 100],
     nwbfile: Optional[NWBFile] = None,
-) -> SpatialLightModulator:
-    spatial_light_modulator = SpatialLightModulator(
-        name=name or name_generator("SpatialLightModulator"),  # nm
+) -> SpatialLightModulator2D:
+    spatial_light_modulator = SpatialLightModulator2D(
+        name=name or name_generator("SpatialLightModulator2D"),  # nm
         description=description,
         model=model,
         manufacturer=manufacturer,
-        size=size,
+        spatial_resolution=spatial_resolution,
     )
     nwbfile.add_device(spatial_light_modulator)
     return spatial_light_modulator
 
+def mock_SpatialLightModulator3D(
+    name: Optional[str] = None,
+    description: str = "Generic description for the spatial light modulator device",
+    model: str = "Generic model for the spatial light modulator device",
+    manufacturer: Optional[str] = None,
+    spatial_resolution: list = [100, 100, 100],
+    nwbfile: Optional[NWBFile] = None,
+) -> SpatialLightModulator3D:
+    spatial_light_modulator = SpatialLightModulator3D(
+        name=name or name_generator("SpatialLightModulator3D"),  # nm
+        description=description,
+        model=model,
+        manufacturer=manufacturer,
+        spatial_resolution=spatial_resolution,
+    )
+    nwbfile.add_device(spatial_light_modulator)
+    return spatial_light_modulator
 
 def mock_PatternedOptogeneticStimulusSite(
     name: Optional[str] = None,
     description: str = "optogenetic stimulus site",
     device: Optional[Device] = None,
-    spatial_light_modulator: Optional[SpatialLightModulator] = None,
+    spatial_light_modulator: Optional[SpatialLightModulator3D] = None,
     light_source: Optional[LightSource] = None,
     excitation_lambda: float = 500.0,
     location: str = "part of the brain",
@@ -136,11 +154,11 @@ def mock_PatternedOptogeneticStimulusSite(
     nwbfile: Optional[NWBFile] = None,
 ) -> PatternedOptogeneticStimulusSite:
     optogenetic_stimulus_site = PatternedOptogeneticStimulusSite(
-        name=name or name_generator("PatternedOptogeneticMethod"),
+        name=name or name_generator("PatternedOptogeneticStimulusSite"),
         description=description,
         device=device or mock_Device(nwbfile=nwbfile),
         light_source=light_source or mock_LightSource(nwbfile=nwbfile),
-        spatial_light_modulator=spatial_light_modulator or mock_SpatialLightModulator(nwbfile=nwbfile),
+        spatial_light_modulator=spatial_light_modulator or mock_SpatialLightModulator3D(nwbfile=nwbfile),
         excitation_lambda=excitation_lambda,
         location=location,
         effector=effector,

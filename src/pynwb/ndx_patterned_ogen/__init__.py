@@ -19,7 +19,8 @@ if not os.path.exists(__spec_path):
 load_namespaces(str(__spec_path))
 
 from .patterned_ogen import (
-    SpatialLightModulator,
+    SpatialLightModulator3D,
+    SpatialLightModulator2D,
     LightSource,
     PatternedOptogeneticStimulusSite,
     PatternedOptogeneticStimulusTable,
@@ -31,7 +32,8 @@ from .patterned_ogen import (
 )
 
 __all__ = [
-    "SpatialLightModulator",
+    "SpatialLightModulator3D",
+    "SpatialLightModulator2D",
     "LightSource",
     "PatternedOptogeneticStimulusSite",
     "PatternedOptogeneticStimulusTable",

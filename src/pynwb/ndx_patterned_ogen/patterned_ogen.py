@@ -9,31 +9,64 @@ from pynwb.ogen import OptogeneticStimulusSite
 namespace = "ndx-patterned-ogen"
 
 
-@register_class("SpatialLightModulator", namespace)
-class SpatialLightModulator(Device):
+@register_class("SpatialLightModulator3D", namespace)
+class SpatialLightModulator3D(Device):
     """
     Spatial light modulator used in the experiment.
     """
 
-    __nwbfields__ = ("model", "size")
+    __nwbfields__ = ("model", "spatial_resolution")
 
     @docval(
-        {"name": "name", "type": str, "doc": "Name of SpatialLightModulator object. "},
+        {"name": "name", "type": str, "doc": "Name of SpatialLightModulator3D object."},
         *get_docval(Device.__init__, "description", "manufacturer"),
-        {"name": "model", "type": str, "doc": "The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker)."},
         {
-            "name": "size",
+            "name": "model",
+            "type": str,
+            "doc": "The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker).",
+        },
+        {
+            "name": "spatial_resolution",
             "type": Iterable,
-            "doc": (
-                "Resolution of spatial light modulator (in pixels), formatted as [width, height] or [width, height, "
-                "depth]."
-            ),
+            "doc": "Resolution of spatial light modulator (in pixels), formatted as [width, height, depth].",
             "default": None,
-            "shape": ((2,), (3,)),
+            "shape": (3,),
         },
     )
     def __init__(self, **kwargs):
-        keys_to_set = ("model", "size")
+        keys_to_set = ("model", "spatial_resolution")
+        args_to_set = popargs_to_dict(keys_to_set, kwargs)
+        super().__init__(**kwargs)
+        for key, val in args_to_set.items():
+            setattr(self, key, val)
+
+
+@register_class("SpatialLightModulator2D", namespace)
+class SpatialLightModulator2D(Device):
+    """
+    Spatial light modulator used in the experiment.
+    """
+
+    __nwbfields__ = ("model", "spatial_resolution")
+
+    @docval(
+        {"name": "name", "type": str, "doc": "Name of SpatialLightModulator3D object. "},
+        *get_docval(Device.__init__, "description", "manufacturer"),
+        {
+            "name": "model",
+            "type": str,
+            "doc": "The model specification of the spatial light modulator (e.g. 'X15213 series', from Hamamatsu).",
+        },
+        {
+            "name": "spatial_resolution",
+            "type": Iterable,
+            "doc": "Resolution of spatial light modulator (in pixels), formatted as [width, height].",
+            "default": None,
+            "shape": (2,),
+        },
+    )
+    def __init__(self, **kwargs):
+        keys_to_set = ("model", "spatial_resolution")
         args_to_set = popargs_to_dict(keys_to_set, kwargs)
         super().__init__(**kwargs)
         for key, val in args_to_set.items():
@@ -50,8 +83,7 @@ class LightSource(Device):
         "model",
         "stimulation_wavelength",
         "peak_power",
-        "filter_description"
-        "peak_pulse_energy",
+        "filter_descriptionpeak_pulse_energy",
         "intensity",
         "pulse_rate",
         "exposure_time",
@@ -76,7 +108,9 @@ class LightSource(Device):
         {
             "name": "filter_description",
             "type": str,
-            "doc": "Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'.",
+            "doc": (
+                "Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'."
+            ),
         },
         {
             "name": "peak_pulse_energy",
@@ -133,8 +167,8 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         },
         {
             "name": "spatial_light_modulator",
-            "type": SpatialLightModulator,
-            "doc": "Spatial light modulator used to generate holographic pattern.",
+            "type": (SpatialLightModulator3D, SpatialLightModulator2D),
+            "doc": "Spatial light modulator used to generate photostimulation pattern.",
         },
         {"name": "light_source", "type": LightSource, "doc": "Light source used to apply photostimulation."},
     )
@@ -148,8 +182,8 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
     @docval(
         {
             "name": "spatial_light_modulator",
-            "type": SpatialLightModulator,
-            "doc": "SpatialLightModulator used to generate holographic pattern. ",
+            "type": (SpatialLightModulator3D, SpatialLightModulator2D),
+            "doc": "Spatial light modulator used to generate photostimulation pattern. ",
         }
     )
     def add_spatial_light_modulator(self, spatial_light_modulator):
@@ -161,10 +195,10 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         else:
             self.spatial_light_modulator = spatial_light_modulator
 
-    @docval({"name": "light_source", "type": LightSource, "doc": "LightSource used to apply photostimulation."})
+    @docval({"name": "light_source", "type": LightSource, "doc": "Light source used to apply photostimulation."})
     def add_light_source(self, light_source):
         """
-        Add a light_source to the photostimulation method.
+        Add a light source to the photostimulation method.
         """
 
         if self.light_source is not None:
@@ -189,7 +223,10 @@ class OptogeneticStimulusTarget(LabMetaData):
         {
             "name": "segmented_rois",
             "type": DynamicTableRegion,
-            "doc": "A table region referencing a PlaneSegmentation object storing segmented ROIs that receive photostimulation.",
+            "doc": (
+                "A table region referencing a PlaneSegmentation object storing segmented ROIs that receive"
+                " photostimulation."
+            ),
         },
         {
             "name": "targeted_rois",
