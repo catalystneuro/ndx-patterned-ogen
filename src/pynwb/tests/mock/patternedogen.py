@@ -81,6 +81,7 @@ def mock_LightSource(
     stimulation_wavelength: float = 1035.0,  # nm
     description: str = "Generic description for the laser",
     peak_power: float = 0.70,  # the peak power of stimulation in Watts
+    filter_description: str = "Short pass at 1040 nm",
     peak_pulse_energy: float = 0.70,
     intensity: float = 0.005,  # the intensity of excitation in W/mm^2
     exposure_time: float = 2.51e-13,  # the exposure time of the sample in seconds
@@ -92,6 +93,7 @@ def mock_LightSource(
         manufacturer=manufacturer,
         model=model,
         stimulation_wavelength=stimulation_wavelength,
+        filter_description=filter_description,
         description=description,
         peak_pulse_energy=peak_pulse_energy,
         peak_power=peak_power,

@@ -20,7 +20,7 @@ class SpatialLightModulator(Device):
     @docval(
         {"name": "name", "type": str, "doc": "Name of SpatialLightModulator object. "},
         *get_docval(Device.__init__, "description", "manufacturer"),
-        {"name": "model", "type": str, "doc": "Model of SpatialLightModulator."},
+        {"name": "model", "type": str, "doc": "The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker)."},
         {
             "name": "size",
             "type": Iterable,
@@ -50,6 +50,7 @@ class LightSource(Device):
         "model",
         "stimulation_wavelength",
         "peak_power",
+        "filter_description"
         "peak_pulse_energy",
         "intensity",
         "pulse_rate",
@@ -71,6 +72,11 @@ class LightSource(Device):
             "type": (int, float),
             "doc": "Incident power of stimulation device (in Watts).",
             "default": None,
+        },
+        {
+            "name": "filter_description",
+            "type": str,
+            "doc": "Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'.",
         },
         {
             "name": "peak_pulse_energy",
@@ -97,6 +103,7 @@ class LightSource(Device):
             "model",
             "stimulation_wavelength",
             "peak_power",
+            "filter_description",
             "peak_pulse_energy",
             "intensity",
             "pulse_rate",

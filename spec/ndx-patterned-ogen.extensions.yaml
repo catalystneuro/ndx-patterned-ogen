@@ -85,7 +85,7 @@ groups:
     attributes:
       - name: model
         dtype: text
-        doc: The model specification of the spatial light modulator.
+        doc: The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker).
         required: false
       - name: size
         dtype: numeric
@@ -104,6 +104,10 @@ groups:
       - name: model
         dtype: text
         doc: Model of light source device. 
+        required: false
+      - name: filter_description
+        dtype: text
+        doc: Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'.
         required: false
       - name: peak_power
         dtype: numeric
