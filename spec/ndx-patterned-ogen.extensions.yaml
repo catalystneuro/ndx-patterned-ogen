@@ -26,20 +26,22 @@ groups:
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a spiral scanning pattern.
     attributes:
+      - name: diameter
+        dtype: numeric
+        doc: Spiral diameter of each sweep (in micrometers).
+        required: true
+      - name: number_of_revolutions
+        dtype: numeric
+        doc: Number of turns within a spiral.
+        required: true
       - name: description
         dtype: text
         doc: Description of the pattern.
         required: false
-      - name: diameter
-        dtype: numeric
-        doc: Spiral diameter of each sweep (in micrometers).
       - name: height
         dtype: numeric
         doc: Spiral height of each sweep (in micrometers).
         required: false
-      - name: number_of_revolutions
-        dtype: numeric
-        doc: Number of turns within a spiral.
   - neurodata_type_def: TemporalFocusing
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a temporal focusing beam-shaping.
