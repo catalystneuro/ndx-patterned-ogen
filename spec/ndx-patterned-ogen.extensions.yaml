@@ -113,7 +113,7 @@ groups:
         required: false
       - name: exposure_time
         dtype: numeric
-        doc: exposure time of the sample
+        doc: Exposure time of the sample.
         required: false
       - name: pulse_rate
         dtype: numeric
