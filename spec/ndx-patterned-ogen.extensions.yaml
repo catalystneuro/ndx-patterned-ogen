@@ -70,7 +70,7 @@ groups:
     links:
       - name: spatial_light_modulator
         target_type: SpatialLightModulator
-        doc: SpatialLightModulator used to generate holographic pattern.
+        doc: Spatial light modulator used to generate holographic pattern.
       - name: light_source
         target_type: LightSource
         doc: LightSource used to apply photostimulation.
