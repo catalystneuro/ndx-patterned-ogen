@@ -111,6 +111,7 @@ class LightSource(Device):
             "doc": (
                 "Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'."
             ),
+            "default": None,
         },
         {
             "name": "peak_pulse_energy",
