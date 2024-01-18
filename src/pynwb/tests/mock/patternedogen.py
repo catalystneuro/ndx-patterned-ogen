@@ -39,6 +39,7 @@ def mock_OptogeneticStimulus2DPattern(
     nwbfile.add_lab_meta_data(stimulus_pattern)
     return stimulus_pattern
 
+
 def mock_OptogeneticStimulus3DPattern(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus 3D pattern",
@@ -54,6 +55,7 @@ def mock_OptogeneticStimulus3DPattern(
     )
     nwbfile.add_lab_meta_data(stimulus_pattern)
     return stimulus_pattern
+
 
 def mock_TemporalFocusing(
     name: Optional[str] = None,
@@ -140,6 +142,7 @@ def mock_SpatialLightModulator2D(
     nwbfile.add_device(spatial_light_modulator)
     return spatial_light_modulator
 
+
 def mock_SpatialLightModulator3D(
     name: Optional[str] = None,
     description: str = "Generic description for the spatial light modulator device",
@@ -157,6 +160,7 @@ def mock_SpatialLightModulator3D(
     )
     nwbfile.add_device(spatial_light_modulator)
     return spatial_light_modulator
+
 
 def mock_PatternedOptogeneticStimulusSite(
     name: Optional[str] = None,
@@ -196,10 +200,12 @@ def mock_OptogeneticStimulusTarget(
 ) -> OptogeneticStimulusTarget:
     hologram = OptogeneticStimulusTarget(
         name=name or name_generator("Hologram"),
-        targeted_rois=targeted_rois or DynamicTableRegion(
+        targeted_rois=targeted_rois
+        or DynamicTableRegion(
             name="targeted_rois",
             description="targeted rois",
-            table=plane_segmentation or mock_PlaneSegmentation(n_rois=n_rois, name='TargetPlaneSegmentation',nwbfile=nwbfile),
+            table=plane_segmentation
+            or mock_PlaneSegmentation(n_rois=n_rois, name="TargetPlaneSegmentation", nwbfile=nwbfile),
             data=list(range(n_rois)),
         ),
         segmented_rois=segmented_rois

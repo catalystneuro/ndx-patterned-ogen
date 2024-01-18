@@ -116,7 +116,7 @@ class LightSource(Device):
         {
             "name": "peak_pulse_energy",
             "type": (int, float),
-            "doc": "If device is pulsed ligh source, pulse energy (in Joules).",
+            "doc": "If device is pulsed light source, pulse energy (in Joules).",
             "default": None,
         },
         {
@@ -128,7 +128,7 @@ class LightSource(Device):
         {
             "name": "pulse_rate",
             "type": (int, float),
-            "doc": "If device is pulsed ligh source, pulse rate (in Hz) used for stimulation.",
+            "doc": "If device is pulsed light source, pulse rate (in Hz) used for stimulation.",
             "default": None,
         },
         {"name": "exposure_time", "type": (int, float), "doc": "Exposure time of the sample (in sec)", "default": None},

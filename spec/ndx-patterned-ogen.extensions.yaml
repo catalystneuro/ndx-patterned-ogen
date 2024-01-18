@@ -148,7 +148,7 @@ groups:
         required: false
       - name: peak_pulse_energy
         dtype: numeric
-        doc: If device is pulsed ligh source, pulse energy (in Joules).
+        doc: If device is pulsed light source, pulse energy (in Joules).
         required: false
       - name: intensity
         dtype: numeric
@@ -160,7 +160,7 @@ groups:
         required: false
       - name: pulse_rate
         dtype: numeric
-        doc: If device is pulsed ligh source, pulse rate (in Hz) used for stimulation.
+        doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
         required: false
   - neurodata_type_def: OptogeneticStimulusTarget
     neurodata_type_inc: LabMetaData
