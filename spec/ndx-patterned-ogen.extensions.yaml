@@ -73,7 +73,7 @@ groups:
         doc: Spatial light modulator used to generate holographic pattern.
       - name: light_source
         target_type: LightSource
-        doc: LightSource used to apply photostimulation.
+        doc: Light source used to apply photostimulation.
   - neurodata_type_def: SpatialLightModulator
     neurodata_type_inc: Device
     doc: Spatial light modulator used in the experiment.
