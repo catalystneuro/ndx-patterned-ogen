@@ -153,18 +153,23 @@ def mock_PatternedOptogeneticStimulusSite(
 def mock_OptogeneticStimulusTarget(
     name: Optional[str] = None,
     segmented_rois: DynamicTableRegion = None,
-    targeted_rois=None,
+    targeted_rois: DynamicTableRegion = None,
     n_rois: int = 10,
     plane_segmentation: Optional[PlaneSegmentation] = None,
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulusTarget:
     hologram = OptogeneticStimulusTarget(
         name=name or name_generator("Hologram"),
-        targeted_rois=targeted_rois or np.array([[i, i] for i in range(n_rois)]),
+        targeted_rois=targeted_rois or DynamicTableRegion(
+            name="targeted_rois",
+            description="targeted rois",
+            table=plane_segmentation or mock_PlaneSegmentation(n_rois=n_rois, name='TargetPlaneSegmentation',nwbfile=nwbfile),
+            data=list(range(n_rois)),
+        ),
         segmented_rois=segmented_rois
         or DynamicTableRegion(
             name="segmented_rois",
-            description="segmented_rois",
+            description="segmented rois after photostimulation",
             table=plane_segmentation or mock_PlaneSegmentation(n_rois=n_rois, nwbfile=nwbfile),
             data=list(range(n_rois)),
         ),

@@ -174,7 +174,7 @@ class OptogeneticStimulusTarget(LabMetaData):
 
     __nwbfields__ = (
         {"name": "segmented_rois", "child": True},
-        "targeted_rois",
+        {"name": "targeted_rois", "child": True},
     )
 
     @docval(
@@ -182,17 +182,12 @@ class OptogeneticStimulusTarget(LabMetaData):
         {
             "name": "segmented_rois",
             "type": DynamicTableRegion,
-            "doc": "A table region corresponding to the ROIs that were targeted and stimulated",
+            "doc": "A table region referencing a PlaneSegmentation object storing segmented ROIs that receive photostimulation.",
         },
         {
             "name": "targeted_rois",
-            "type": Iterable,
-            "doc": (
-                "Targeted ROIs defined by their centroids, in pixel ([x1, y1], [x2, y2], ...) or voxel ([x1, y1, z1],"
-                " [x2, y2, z2], ...)."
-            ),
-            "default": None,
-            "shape": ((None, 2), (None, 3)),
+            "type": DynamicTableRegion,
+            "doc": "A table region referencing a PlaneSegmentation object storing targeted ROIs.",
         },
     )
     def __init__(self, **kwargs):
