@@ -509,7 +509,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {
             "name": "stimulus_pattern",
             "doc": "Link to the stimulus pattern.",
-            "type": (OptogeneticStimulus3DPattern,OptogeneticStimulus2DPattern, TemporalFocusing, SpiralScanning),
+            "type": (OptogeneticStimulus3DPattern, OptogeneticStimulus2DPattern, TemporalFocusing, SpiralScanning),
         },
         {
             "name": "stimulus_site",
@@ -523,3 +523,28 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         Add a stimulation parameters for a specific stimulus onset.
         """
         super(PatternedOptogeneticStimulusTable, self).add_interval(**kwargs)
+     
+        n_targets = len(kwargs["targets"].targeted_rois[:])
+
+        if isinstance(kwargs["power"], (list, tuple)):
+            if len(kwargs["power"]) != n_targets:
+                power_shape = kwargs["power"].shape
+                raise ValueError(
+                    f"'power' (shape: {power_shape}) must be an array or list of"
+                    f" {n_targets} elements as 'targeted_roi'."
+                )
+        if isinstance(kwargs["frequency"], (list, tuple)):
+            if len(kwargs["frequency"]) != n_targets:
+                frequency_shape = kwargs["frequency"].shape
+                raise ValueError(
+                    f"'frequency' (shape: {frequency_shape}) must be an array or list of"
+                    f" {n_targets} elements as 'targeted_roi'.."
+                )
+
+        if isinstance(kwargs["pulse_width"], (list, tuple)):
+            if len(kwargs["pulse_width"]) != n_targets:
+                pulse_width_shape = kwargs["power"].shape
+                raise ValueError(
+                    f"'pulse_width' (shape: {pulse_width_shape}) must be an array or list of"
+                    f" {n_targets} elements as 'targeted_roi'."
+                )
