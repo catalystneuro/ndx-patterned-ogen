@@ -242,10 +242,10 @@ class OptogeneticStimulusTarget(LabMetaData):
             setattr(self, key, val)
 
 
-@register_class("OptogeneticStimulusPattern", namespace)
-class OptogeneticStimulusPattern(LabMetaData):
+@register_class("OptogeneticStimulus2DPattern", namespace)
+class OptogeneticStimulus2DPattern(LabMetaData):
     """
-    Container to store the information about a generic stimulus pattern (spatial information).
+    Container to store the information about a generic 2D stimulus pattern (spatial information).
     """
 
     __nwbfields__ = ("description", "sweep_size", "sweep_mask")
@@ -265,9 +265,9 @@ class OptogeneticStimulusPattern(LabMetaData):
             "type": (int, float, Iterable),
             "doc": (
                 "Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is"
-                " assumed to be a circle (for 2D patterns) or cylinder (for 3D patterns), with diameter 'sweep_size'."
-                " If 'sweep_size' is a two or three dimensional array, the the sweep pattern is assumed to be a"
-                " rectangle or cuboid, with dimensions [width, height] or [width, height, depth]."
+                " assumed to be a circle (for 2D patterns) with diameter 'sweep_size'."
+                " If 'sweep_size' is a two dimensional array, the the sweep pattern is assumed to be a"
+                " rectangle, with dimensions [width, height]."
             ),
             "default": None,
         },
@@ -275,12 +275,59 @@ class OptogeneticStimulusPattern(LabMetaData):
             "name": "sweep_mask",
             "type": Iterable,
             "doc": (
-                "Scanning sweep pattern designated using a mask of size [width, height] (2D stimulation) or [width,"
-                " height, depth] (3D stimulation), where for a given pixel a value of 1 indicates stimulation, and a"
+                "Scanning sweep pattern designated using a mask of size [width, height] for 2D stimulation,"
+                " where for a given pixel a value of 1 indicates stimulation, and a"
                 " value of 0 indicates no stimulation."
             ),
             "default": None,
-            "shape": ([None] * 2, [None] * 3),
+        },
+    )
+    def __init__(self, **kwargs):
+        keys_to_set = ("description", "sweep_size", "sweep_mask")
+        args_to_set = popargs_to_dict(keys_to_set, kwargs)
+        super().__init__(**kwargs)
+        for key, val in args_to_set.items():
+            setattr(self, key, val)
+
+
+@register_class("OptogeneticStimulus3DPattern", namespace)
+class OptogeneticStimulus3DPattern(LabMetaData):
+    """
+    Container to store the information about a generic 3D stimulus pattern (spatial information).
+    """
+
+    __nwbfields__ = ("description", "sweep_size", "sweep_mask")
+
+    @docval(
+        *get_docval(LabMetaData.__init__, "name"),
+        {
+            "name": "description",
+            "type": str,
+            "doc": (
+                "Description of the scanning or scanless method for shaping optogenetic light. Examples include"
+                " diffraction limited points, 3D shot, disks, etc."
+            ),
+        },
+        {
+            "name": "sweep_size",
+            "type": (int, float, Iterable),
+            "doc": (
+                "Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is"
+                " assumed to be a cylinder (for 3D patterns), with diameter 'sweep_size'."
+                " If 'sweep_size' is a three dimensional array, the the sweep pattern is assumed to be a"
+                " cuboid, with dimensions [width, height, depth]."
+            ),
+            "default": None,
+        },
+        {
+            "name": "sweep_mask",
+            "type": Iterable,
+            "doc": (
+                "Scanning sweep pattern designated using a mask of size [width, height, depth] for 3D stimulation,"
+                " where for a given pixel a value of 1 indicates stimulation, and a"
+                " value of 0 indicates no stimulation."
+            ),
+            "default": None,
         },
     )
     def __init__(self, **kwargs):
@@ -461,7 +508,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {
             "name": "stimulus_pattern",
             "doc": "Link to the stimulus pattern.",
-            "type": (OptogeneticStimulusPattern, TemporalFocusing, SpiralScanning),
+            "type": (OptogeneticStimulus3DPattern,OptogeneticStimulus2DPattern, TemporalFocusing, SpiralScanning),
         },
         {
             "name": "stimulus_site",

@@ -1,7 +1,7 @@
 groups:
-  - neurodata_type_def: OptogeneticStimulusPattern
+  - neurodata_type_def: OptogeneticStimulus2DPattern
     neurodata_type_inc: LabMetaData
-    doc: Container to store the information about a generic stimulus pattern (spatial information).
+    doc: Container to store the information about a generic 2D stimulus pattern (spatial information).
     attributes:
       - name: description
         dtype: text
@@ -11,15 +11,38 @@ groups:
         dtype: numeric
         doc:
           Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is
-          assumed to be a circle (for 2D patterns) or cylinder (for 3D patterns), with diameter 'sweep_size'.
-          If 'sweep_size' is a two or three dimensional array, the the sweep pattern is assumed to be a
-          rectangle or cuboid, with dimensions [width, height] or [width, height, depth].
+          assumed to be a circle (for 2D patterns) with diameter 'sweep_size'.
+          If 'sweep_size' is a two dimensional array, the the sweep pattern is assumed to be a
+          rectangle, with dimensions [width, height].
         required: false
       - name: sweep_mask
         dtype: numeric
         doc:
-          Scanning sweep pattern designated using a mask of size [width, height] (2D stimulation) or [width,
-          height, depth] (3D stimulation), where for a given pixel a value of 1 indicates stimulation, and a
+          Scanning sweep pattern designated using a mask of size [width, height] for 2D stimulation,
+          where for a given pixel a value of 1 indicates stimulation, and a
+          value of 0 indicates no stimulation.
+        required: false
+  - neurodata_type_def: OptogeneticStimulus3DPattern
+    neurodata_type_inc: LabMetaData
+    doc: Container to store the information about a generic 3D stimulus pattern (spatial information).
+    attributes:
+      - name: description
+        dtype: text
+        doc: Description of the scanning or scanless method for shaping optogenetic light. Examples include diffraction limited points, 3D shot, disks, etc.
+        required: false
+      - name: sweep_size
+        dtype: numeric
+        doc:
+          Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is
+          assumed to be a cylinder (for 3D patterns), with diameter 'sweep_size'.
+          If 'sweep_size' is a three dimensional array, the the sweep pattern is assumed to be a
+          cuboid, with dimensions [width, height, depth].
+        required: false
+      - name: sweep_mask
+        dtype: numeric
+        doc:
+          Scanning sweep pattern designated using a mask of size [width,height, depth] for 3D stimulation,
+          where for a given pixel a value of 1 indicates stimulation, and a
           value of 0 indicates no stimulation.
         required: false
   - neurodata_type_def: SpiralScanning
@@ -81,7 +104,7 @@ groups:
         required: false
   - neurodata_type_def: SpatialLightModulator2D
     neurodata_type_inc: Device
-    doc:  2D spatial light modulator used in the experiment.
+    doc: 2D spatial light modulator used in the experiment.
     attributes:
       - name: model
         dtype: text

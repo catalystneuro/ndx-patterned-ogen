@@ -13,7 +13,8 @@ from ndx_patterned_ogen import (
     PatternedOptogeneticStimulusTable,
     PatternedOptogeneticStimulusSite,
     OptogeneticStimulusTarget,
-    OptogeneticStimulusPattern,
+    OptogeneticStimulus2DPattern,
+    OptogeneticStimulus3DPattern,
     SpiralScanning,
     TemporalFocusing,
     SpatialLightModulator3D,
@@ -22,15 +23,15 @@ from ndx_patterned_ogen import (
 )
 
 
-def mock_OptogeneticStimulusPattern(
+def mock_OptogeneticStimulus2DPattern(
     name: Optional[str] = None,
-    description: str = "Generic description for optogenetic stimulus pattern",
+    description: str = "Generic description for optogenetic stimulus 2D pattern",
     sweep_size: float = 5,  # um
     sweep_mask=np.zeros((10, 10)),
     nwbfile: Optional[NWBFile] = None,
-) -> OptogeneticStimulusPattern:
-    stimulus_pattern = OptogeneticStimulusPattern(
-        name=name or name_generator("OptogeneticStimulusPattern"),
+) -> OptogeneticStimulus2DPattern:
+    stimulus_pattern = OptogeneticStimulus2DPattern(
+        name=name or name_generator("OptogeneticStimulus2DPattern"),
         description=description,
         sweep_mask=sweep_mask,
         sweep_size=sweep_size,
@@ -38,6 +39,21 @@ def mock_OptogeneticStimulusPattern(
     nwbfile.add_lab_meta_data(stimulus_pattern)
     return stimulus_pattern
 
+def mock_OptogeneticStimulus3DPattern(
+    name: Optional[str] = None,
+    description: str = "Generic description for optogenetic stimulus 3D pattern",
+    sweep_size: float = 5,  # um
+    sweep_mask=np.zeros((10, 10, 2)),
+    nwbfile: Optional[NWBFile] = None,
+) -> OptogeneticStimulus3DPattern:
+    stimulus_pattern = OptogeneticStimulus3DPattern(
+        name=name or name_generator("OptogeneticStimulus3DPattern"),
+        description=description,
+        sweep_mask=sweep_mask,
+        sweep_size=sweep_size,
+    )
+    nwbfile.add_lab_meta_data(stimulus_pattern)
+    return stimulus_pattern
 
 def mock_TemporalFocusing(
     name: Optional[str] = None,
@@ -146,7 +162,7 @@ def mock_PatternedOptogeneticStimulusSite(
     name: Optional[str] = None,
     description: str = "optogenetic stimulus site",
     device: Optional[Device] = None,
-    spatial_light_modulator: Optional[SpatialLightModulator3D] = None,
+    spatial_light_modulator: Optional[Device] = None,
     light_source: Optional[LightSource] = None,
     excitation_lambda: float = 500.0,
     location: str = "part of the brain",
@@ -158,7 +174,7 @@ def mock_PatternedOptogeneticStimulusSite(
         description=description,
         device=device or mock_Device(nwbfile=nwbfile),
         light_source=light_source or mock_LightSource(nwbfile=nwbfile),
-        spatial_light_modulator=spatial_light_modulator or mock_SpatialLightModulator3D(nwbfile=nwbfile),
+        spatial_light_modulator=spatial_light_modulator or mock_SpatialLightModulator2D(nwbfile=nwbfile),
         excitation_lambda=excitation_lambda,
         location=location,
         effector=effector,
@@ -221,7 +237,7 @@ def mock_PatternedOptogeneticStimulusTable(
             power=power[i],
             frequency=frequency[i],
             pulse_width=pulse_width[i],
-            stimulus_pattern=stimulus_pattern[i] or mock_OptogeneticStimulusPattern(nwbfile=nwbfile),
+            stimulus_pattern=stimulus_pattern[i] or mock_OptogeneticStimulus2DPattern(nwbfile=nwbfile),
             targets=targets[i] or mock_OptogeneticStimulusTarget(nwbfile=nwbfile),
             stimulus_site=stimulus_site[i] or mock_PatternedOptogeneticStimulusSite(nwbfile=nwbfile),
         )

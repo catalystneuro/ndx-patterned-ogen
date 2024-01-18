@@ -9,7 +9,7 @@ from pynwb.testing import TestCase, remove_test_file, NWBH5IOFlexMixin
 
 from ndx_patterned_ogen import PatternedOptogeneticStimulusTable
 from .mock.patternedogen import (
-    mock_OptogeneticStimulusPattern,
+    mock_OptogeneticStimulus2DPattern,
     mock_OptogeneticStimulusTarget,
     mock_PatternedOptogeneticStimulusSite,
 )
@@ -48,7 +48,7 @@ class TestPatternedOgenConstructor(TestCase):
             power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile),
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
@@ -93,7 +93,7 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
             power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile),
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
@@ -132,7 +132,7 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
             power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=targets,
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
@@ -176,7 +176,7 @@ class TestPatternedOptogeneticStimulusTableRoundtripPyNWB(NWBH5IOFlexMixin, Test
             power=power,
             frequency=frequency,
             pulse_width=pulse_width,
-            stimulus_pattern=mock_OptogeneticStimulusPattern(nwbfile=self.nwbfile),
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile),
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
