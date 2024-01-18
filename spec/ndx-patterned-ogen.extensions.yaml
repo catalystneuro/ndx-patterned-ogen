@@ -28,7 +28,7 @@ groups:
     attributes:
       - name: diameter
         dtype: numeric
-        doc: Spiral diameter of each sweep (in micrometers).
+        doc: Spiral diameter (in micrometers).
         required: true
       - name: number_of_revolutions
         dtype: numeric
