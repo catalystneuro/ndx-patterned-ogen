@@ -80,7 +80,7 @@ groups:
     attributes:
       - name: model
         dtype: text
-        doc: Model of SpatialLightModulator.
+        doc: The model specification of the spatial light modulator.
         required: false
       - name: size
         dtype: numeric
