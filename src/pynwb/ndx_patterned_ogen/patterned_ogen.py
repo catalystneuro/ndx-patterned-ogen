@@ -25,7 +25,7 @@ class SpatialLightModulator(Device):
             "name": "size",
             "type": Iterable,
             "doc": (
-                "Resolution of SpatialLightModulator (in pixels), formatted as [width, height] or [width, height, "
+                "Resolution of spatial light modulator (in pixels), formatted as [width, height] or [width, height, "
                 "depth]."
             ),
             "default": None,
@@ -59,7 +59,7 @@ class LightSource(Device):
     @docval(
         {"name": "name", "type": str, "doc": "Name of LightSource object."},
         *get_docval(Device.__init__, "description", "manufacturer"),
-        {"name": "model", "type": str, "doc": "Model of LightSource."},
+        {"name": "model", "type": str, "doc": "Model of light source device."},
         {
             "name": "stimulation_wavelength",
             "type": (int, float),
@@ -75,19 +75,19 @@ class LightSource(Device):
         {
             "name": "peak_pulse_energy",
             "type": (int, float),
-            "doc": "If device is pulsed laser, pulse energy (in Joules).",
+            "doc": "If device is pulsed ligh source, pulse energy (in Joules).",
             "default": None,
         },
         {
             "name": "intensity",
             "type": (int, float),
-            "doc": "intensity of the excitation, if known (in W/mm^2).",
+            "doc": "Intensity of the excitation in W/m^2, if known.",
             "default": None,
         },
         {
             "name": "pulse_rate",
             "type": (int, float),
-            "doc": "If device is pulsed laser, pulse rate (in Hz) used for stimulation.",
+            "doc": "If device is pulsed ligh source, pulse rate (in Hz) used for stimulation.",
             "default": None,
         },
         {"name": "exposure_time", "type": (int, float), "doc": "Exposure time of the sample (in sec)", "default": None},
@@ -127,9 +127,9 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         {
             "name": "spatial_light_modulator",
             "type": SpatialLightModulator,
-            "doc": "SpatialLightModulator used to generate holographic pattern.",
+            "doc": "Spatial light modulator used to generate holographic pattern.",
         },
-        {"name": "light_source", "type": LightSource, "doc": "LightSource used to apply photostimulation."},
+        {"name": "light_source", "type": LightSource, "doc": "Light source used to apply photostimulation."},
     )
     def __init__(self, **kwargs):
         keys_to_set = ("effector", "spatial_light_modulator", "light_source")
@@ -150,7 +150,7 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         Add a spatial light modulator to the photostimulation method.
         """
         if self.spatial_light_modulator is not None:
-            raise ValueError("SpatialLightMonitor already exists in this PatternedOptogeneticStimulusSite container.")
+            raise ValueError("SpatialLightModulator already exists in this PatternedOptogeneticStimulusSite container.")
         else:
             self.spatial_light_modulator = spatial_light_modulator
 
@@ -182,14 +182,14 @@ class OptogeneticStimulusTarget(LabMetaData):
         {
             "name": "segmented_rois",
             "type": DynamicTableRegion,
-            "doc": "a table region corresponding to the ROIs that were targeted and stimulated",
+            "doc": "A table region corresponding to the ROIs that were targeted and stimulated",
         },
         {
             "name": "targeted_rois",
             "type": Iterable,
             "doc": (
-                "additional targeted ROIs designated as a list specifying the pixel ([x1, y1], [x2, y2], …) or"
-                " voxel ([x1, y1, z1], [x2, y2, z2], …) centroid of each ROI"
+                "Targeted ROIs defined by their centroids, in pixel ([x1, y1], [x2, y2], ...) or voxel ([x1, y1, z1],"
+                " [x2, y2, z2], ...)."
             ),
             "default": None,
             "shape": ((None, 2), (None, 3)),
@@ -206,7 +206,7 @@ class OptogeneticStimulusTarget(LabMetaData):
 @register_class("OptogeneticStimulusPattern", namespace)
 class OptogeneticStimulusPattern(LabMetaData):
     """
-    Container to store the information about a generic stimulus pattern (spatial information)
+    Container to store the information about a generic stimulus pattern (spatial information).
     """
 
     __nwbfields__ = ("description", "sweep_size", "sweep_mask")
@@ -217,8 +217,8 @@ class OptogeneticStimulusPattern(LabMetaData):
             "name": "description",
             "type": str,
             "doc": (
-                "Scanning or scanless method for shaping optogenetic light "
-                "(ex., diffraction limited points,3D shot, disks, etc.)."
+                "Description of the scanning or scanless method for shaping optogenetic light. Examples include"
+                " diffraction limited points, 3D shot, disks, etc."
             ),
         },
         {
@@ -265,19 +265,19 @@ class TemporalFocusing(LabMetaData):
         {
             "name": "description",
             "type": str,
-            "doc": "description of the pattern",
+            "doc": "Describe any additional details about the pattern.",
             "default": None,
         },
         {
             "name": "lateral_point_spread_function",
             "type": str,
-            "doc": "estimated lateral spatial profile or point spread function, expressed as mean [um] ± s.d [um].",
+            "doc": "Estimated lateral spatial profile or point spread function, expressed as mean [um] ± s.d [um].",
             "default": None,
         },
         {
             "name": "axial_point_spread_function",
             "type": str,
-            "doc": "estimated axial spatial profile or point spread function, expressed as mean [um] ± s.d [um].",
+            "doc": "Estimated axial spatial profile or point spread function, expressed as mean [um] ± s.d [um]",
             "default": None,
         },
     )
@@ -292,7 +292,7 @@ class TemporalFocusing(LabMetaData):
 @register_class("SpiralScanning", namespace)
 class SpiralScanning(LabMetaData):
     """
-    Container to store the parameters defining a spiral scanning pattern
+    Container to store the parameters defining a spiral scanning pattern.
     """
 
     __nwbfields__ = ("description", "diameter", "height", "number_of_revolutions")
@@ -302,25 +302,25 @@ class SpiralScanning(LabMetaData):
         {
             "name": "description",
             "type": str,
-            "doc": "description of the pattern",
+            "doc": "Describe any additional details about the pattern.",
             "default": None,
         },
         {
             "name": "diameter",
             "type": (int, float),
-            "doc": "spiral diameter of each sweep (in micrometers)",
+            "doc": "Spiral diameter (in micrometers).",
             "default": None,
         },
         {
             "name": "height",
             "type": (int, float),
-            "doc": "spiral height of each sweep (in micrometers)",
+            "doc": "Spiral height of each sweep (in micrometers).",
             "default": None,
         },
         {
             "name": "number_of_revolutions",
             "type": int,
-            "doc": "number of turns within a spiral",
+            "doc": "Number of turns within a spiral.",
             "default": None,
         },
     )
@@ -349,23 +349,23 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         },
         {
             "name": "frequency",
-            "description": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz)",
+            "description": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz).",
             "required": False,
         },
         {
             "name": "pulse_width",
-            "description": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase",
+            "description": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.",
             "required": False,
         },
-        {"name": "targets", "description": "Targeted rois for the stimulus onset", "required": True},
+        {"name": "targets", "description": "Targeted rois for the stimulus onset.", "required": True},
         {
             "name": "stimulus_pattern",
-            "description": "link to the stimulus pattern",
+            "description": "Link to the stimulus pattern.",
             "required": True,
         },
         {
             "name": "stimulus_site",
-            "description": "link to the stimulus site",
+            "description": "Link to the stimulus site.",
             "required": True,
         },
     )
@@ -394,8 +394,8 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             setattr(self, key, val)
 
     @docval(
-        {"name": "start_time", "doc": "Start time of stimulation, in seconds", "type": float},
-        {"name": "stop_time", "doc": "Stop time of stimulation, in seconds", "type": float},
+        {"name": "start_time", "doc": "Start time of stimulation, in seconds.", "type": float},
+        {"name": "stop_time", "doc": "Stop time of stimulation, in seconds.", "type": float},
         {
             "name": "power",
             "doc": "Power (in Watts) applied to each target during patterned photostimulation.",
@@ -404,35 +404,35 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         },
         {
             "name": "frequency",
-            "doc": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz)",
+            "doc": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz).",
             "type": (int, float, Iterable),
             "default": 0.0,
         },
         {
             "name": "pulse_width",
-            "doc": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase",
+            "doc": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.",
             "type": (int, float, Iterable),
             "default": 0.0,
         },
         {
             "name": "targets",
-            "doc": "Targeted rois for the stimulus onset",
+            "doc": "Targeted rois for the stimulus onset.",
             "type": OptogeneticStimulusTarget,
         },
         {
             "name": "stimulus_pattern",
-            "doc": "link to the stimulus pattern",
+            "doc": "Link to the stimulus pattern.",
             "type": (OptogeneticStimulusPattern, TemporalFocusing, SpiralScanning),
         },
         {
             "name": "stimulus_site",
-            "doc": "link to the stimulus site",
+            "doc": "Link to the stimulus site.",
             "type": PatternedOptogeneticStimulusSite,
         },
         allow_extra=True,
     )
     def add_interval(self, **kwargs):
         """
-        Add a stimulation parameters for a specific run.
+        Add a stimulation parameters for a specific stimulus onset.
         """
         super(PatternedOptogeneticStimulusTable, self).add_interval(**kwargs)

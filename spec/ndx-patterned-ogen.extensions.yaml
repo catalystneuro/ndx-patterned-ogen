@@ -46,20 +46,22 @@ groups:
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a temporal focusing beam-shaping.
     attributes:
-      - name: description
-        dtype: text
-        doc: Description of the pattern.
-        required: false
       - name: lateral_point_spread_function
         dtype: text
         doc:
           Estimated lateral spatial profile or point spread function, expressed as
           mean [um] ± s.d [um].
+        required: true
       - name: axial_point_spread_function
         dtype: text
         doc:
           Estimated axial spatial profile or point spread function, expressed as mean
           [um] ± s.d [um].
+        required: true
+      - name: description
+        dtype: text
+        doc: Describe any additional details about the pattern.
+        required: false
   - neurodata_type_def: PatternedOptogeneticStimulusSite
     neurodata_type_inc: OptogeneticStimulusSite
     doc: Patterned optogenetic stimulus site.
@@ -67,13 +69,16 @@ groups:
       - name: effector
         dtype: text
         doc: Light-activated effector protein expressed by the targeted cell (e.g., ChR2).
+        required: true
     links:
-      - name: spatial_light_modulator
-        target_type: SpatialLightModulator
-        doc: Spatial light modulator used to generate holographic pattern.
       - name: light_source
         target_type: LightSource
         doc: Light source used to apply photostimulation.
+        required: true
+      - name: spatial_light_modulator
+        target_type: SpatialLightModulator
+        doc: Spatial light modulator used to generate holographic pattern.
+        required: false
   - neurodata_type_def: SpatialLightModulator
     neurodata_type_inc: Device
     doc: Spatial light modulator used in the experiment.
@@ -85,27 +90,28 @@ groups:
       - name: size
         dtype: numeric
         doc:
-          Resolution of SpatialLightModulator (in pixels), formatted as [width, height]
+          Resolution of spatial light modulator (in pixels), formatted as [width, height]
           or [width, height, depth].
         required: false
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
     doc: Light source used in the experiment.
     attributes:
-      - name: model
-        dtype: text
-        doc: Model of LightSource.
-        required: false
       - name: stimulation_wavelength
         dtype: numeric
         doc: Excitation wavelength of stimulation light (nanometers).
+        required: true
+      - name: model
+        dtype: text
+        doc: Model of light source device. 
+        required: false
       - name: peak_power
         dtype: numeric
         doc: Incident power of stimulation device (in Watts).
         required: false
       - name: peak_pulse_energy
         dtype: numeric
-        doc: If device is pulsed laser, pulse energy (in Joules).
+        doc: If device is pulsed ligh source, pulse energy (in Joules).
         required: false
       - name: intensity
         dtype: numeric
@@ -113,11 +119,11 @@ groups:
         required: false
       - name: exposure_time
         dtype: numeric
-        doc: Exposure time of the sample.
+        doc: Exposure time of the sample (in sec).
         required: false
       - name: pulse_rate
         dtype: numeric
-        doc: If device is pulsed laser, pulse rate (in Hz) used for stimulation.
+        doc: If device is pulsed ligh source, pulse rate (in Hz) used for stimulation.
         required: false
   - neurodata_type_def: OptogeneticStimulusTarget
     neurodata_type_inc: LabMetaData
@@ -131,6 +137,7 @@ groups:
       - name: targeted_rois
         dtype: numeric
         doc: Targeted ROIs defined by their centroids, in pixel ([x1, y1], [x2, y2], ...) or voxel ([x1, y1, z1], [x2, y2, z2], ...).
+        required: true
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
     doc: Table to hold all patterned optogenetic stimulus onsets.
@@ -139,6 +146,28 @@ groups:
       - name: power
         neurodata_type_inc: VectorData
         doc: Power (in Watts) applied to each target during patterned photostimulation.
+        required: true
+      - name: targets
+        neurodata_type_inc: VectorData
+        dtype:
+          target_type: OptogeneticStimulusTarget
+          reftype: object
+        doc: Targeted rois for the stimulus onset.
+        required: true
+      - name: stimulus_pattern
+        neurodata_type_inc: VectorData
+        dtype:
+          target_type: LabMetaData
+          reftype: object
+        doc: Link to the stimulus pattern.
+        required: true
+      - name: stimulus_site
+        neurodata_type_inc: VectorData
+        dtype:
+          target_type: PatternedOptogeneticStimulusSite
+          reftype: object
+        doc: Link to the stimulus site.
+        required: true
       - name: frequency
         neurodata_type_inc: VectorData
         doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz).
@@ -147,21 +176,3 @@ groups:
         neurodata_type_inc: VectorData
         doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.
         required: false
-      - name: targets
-        neurodata_type_inc: VectorData
-        dtype:
-          target_type: OptogeneticStimulusTarget
-          reftype: object
-        doc: Targeted rois for the stimulus onset.
-      - name: stimulus_pattern
-        neurodata_type_inc: VectorData
-        dtype:
-          target_type: LabMetaData
-          reftype: object
-        doc: Link to the stimulus pattern.
-      - name: stimulus_site
-        neurodata_type_inc: VectorData
-        dtype:
-          target_type: PatternedOptogeneticStimulusSite
-          reftype: object
-        doc: Link to the stimulus site.
