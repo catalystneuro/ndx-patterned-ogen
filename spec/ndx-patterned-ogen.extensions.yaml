@@ -36,7 +36,7 @@ groups:
         required: true
       - name: description
         dtype: text
-        doc: Description of the pattern.
+        doc: Describe any additional details about the pattern.
         required: false
       - name: height
         dtype: numeric
