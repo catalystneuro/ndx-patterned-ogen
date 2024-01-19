@@ -5,6 +5,7 @@ from pynwb.core import DynamicTableRegion
 from pynwb.device import Device
 from pynwb.file import LabMetaData, TimeIntervals
 from pynwb.ogen import OptogeneticStimulusSite
+import numpy as np
 
 namespace = "ndx-patterned-ogen"
 
@@ -526,25 +527,25 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
      
         n_targets = len(kwargs["targets"].targeted_rois[:])
 
-        if isinstance(kwargs["power"], (list, tuple)):
-            if len(kwargs["power"]) != n_targets:
-                power_shape = kwargs["power"].shape
+        if isinstance(kwargs["power"], (list, np.ndarray, tuple)):
+            n_elements = len(kwargs["power"])
+            if n_elements != n_targets:
                 raise ValueError(
-                    f"'power' (shape: {power_shape}) must be an array or list of"
+                    f"'power' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
-        if isinstance(kwargs["frequency"], (list, tuple)):
-            if len(kwargs["frequency"]) != n_targets:
-                frequency_shape = kwargs["frequency"].shape
+        if isinstance(kwargs["frequency"], (list, np.ndarray, tuple)):
+            n_elements = len(kwargs["frequency"])
+            if n_elements != n_targets:
                 raise ValueError(
-                    f"'frequency' (shape: {frequency_shape}) must be an array or list of"
-                    f" {n_targets} elements as 'targeted_roi'.."
+                    f"'frequency' has {n_elements} elements but it must have"
+                    f" {n_targets} elements as 'targeted_roi'."
                 )
 
-        if isinstance(kwargs["pulse_width"], (list, tuple)):
-            if len(kwargs["pulse_width"]) != n_targets:
-                pulse_width_shape = kwargs["power"].shape
+        if isinstance(kwargs["pulse_width"], (list, np.ndarray, tuple)):
+            n_elements = len(kwargs["pulse_width"])
+            if n_elements != n_targets:
                 raise ValueError(
-                    f"'pulse_width' (shape: {pulse_width_shape}) must be an array or list of"
+                    f"'pulse_width' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
