@@ -113,6 +113,7 @@ groups:
         dtype: text
         doc: The model specification of the spatial light modulator (e.g. 'X15213 series', from Hamamatsu).
         required: false
+    datasets:
       - name: spatial_resolution
         dtype: numeric
         doc: Resolution of spatial light modulator (in pixels), formatted as [width, height].
@@ -125,6 +126,7 @@ groups:
         dtype: text
         doc: The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker).
         required: false
+    datasets:
       - name: spatial_resolution
         dtype: numeric
         doc: Resolution of spatial light modulator (in pixels), formatted as [width, height, depth].
