@@ -216,8 +216,8 @@ class OptogeneticStimulusTarget(LabMetaData):
     """
 
     __nwbfields__ = (
-        {"name": "segmented_rois", "child": True},
         {"name": "targeted_rois", "child": True},
+        {"name": "segmented_rois", "child": True},
     )
 
     @docval(
@@ -229,6 +229,7 @@ class OptogeneticStimulusTarget(LabMetaData):
                 "A table region referencing a PlaneSegmentation object storing segmented ROIs that receive"
                 " photostimulation."
             ),
+            "default": None,
         },
         {
             "name": "targeted_rois",
