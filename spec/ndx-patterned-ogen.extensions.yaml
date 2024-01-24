@@ -91,7 +91,7 @@ groups:
   - neurodata_type_def: PatternedOptogeneticStimulusSite
     neurodata_type_inc: OptogeneticStimulusSite
     doc: Patterned optogenetic stimulus site.
-    attributes:
+    datasets:
       - name: effector
         dtype: text
         doc: Light-activated effector protein expressed by the targeted cell (e.g., ChR2).
