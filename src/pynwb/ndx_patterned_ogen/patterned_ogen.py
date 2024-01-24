@@ -228,7 +228,7 @@ class OptogeneticStimulusTarget(LabMetaData):
                 "A table region referencing a PlaneSegmentation object storing segmented ROIs that receive"
                 " photostimulation."
             ),
-            "default": None
+            "default": None,
         },
         {
             "name": "targeted_rois",
@@ -253,15 +253,19 @@ class OptogeneticStimulusTarget(LabMetaData):
             ),
         },
     )
-    def add_segmented_rois(self,segmented_rois):
+    def add_segmented_rois(self, segmented_rois):
         """
         Add an roi table region for segmented rois to the optogenetic stimulus target.
         """
 
         if self.segmented_rois is not None:
-            raise ValueError("A roi table region for segmented rois already exists in this OptogeneticStimulusTarget container.")
+            raise ValueError(
+                "A roi table region for segmented rois already exists in this OptogeneticStimulusTarget container."
+            )
         else:
             self.segmented_rois = segmented_rois
+
+
 @register_class("OptogeneticStimulus2DPattern", namespace)
 class OptogeneticStimulus2DPattern(LabMetaData):
     """
@@ -528,7 +532,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {
             "name": "stimulus_pattern",
             "doc": "Link to the stimulus pattern.",
-            "type": (OptogeneticStimulus3DPattern,OptogeneticStimulus2DPattern, TemporalFocusing, SpiralScanning),
+            "type": (OptogeneticStimulus3DPattern, OptogeneticStimulus2DPattern, TemporalFocusing, SpiralScanning),
         },
         {
             "name": "stimulus_site",
