@@ -6,15 +6,15 @@ groups:
       - name: description
         dtype: text
         doc: Description of the scanning or scanless method for shaping optogenetic light. Examples include diffraction limited points, 3D shot, disks, etc.
-        required: false
+        required: true
+    datasets:
       - name: sweep_size
         dtype: numeric
         doc:
-          Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is
+          Size of the scanning sweep pattern (default in micrometers). If a scalar is provided, the sweep pattern is
           assumed to be a circle (for 2D patterns) with diameter 'sweep_size'.
           If 'sweep_size' is a two dimensional array, the the sweep pattern is assumed to be a
           rectangle, with dimensions [width, height].
-        required: false
       - name: sweep_mask
         dtype: numeric
         doc:
@@ -29,11 +29,12 @@ groups:
       - name: description
         dtype: text
         doc: Description of the scanning or scanless method for shaping optogenetic light. Examples include diffraction limited points, 3D shot, disks, etc.
-        required: false
+        required: true
+    datasets:
       - name: sweep_size
         dtype: numeric
         doc:
-          Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is
+          Size of the scanning sweep pattern (default in micrometers). If a scalar is provided, the sweep pattern is
           assumed to be a cylinder (for 3D patterns), with diameter 'sweep_size'.
           If 'sweep_size' is a three dimensional array, the the sweep pattern is assumed to be a
           cuboid, with dimensions [width, height, depth].
