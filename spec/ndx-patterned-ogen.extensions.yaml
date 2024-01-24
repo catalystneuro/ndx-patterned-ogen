@@ -134,15 +134,11 @@ groups:
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
     doc: Light source used in the experiment.
-    attributes:
+    datasets:
       - name: stimulation_wavelength
         dtype: numeric
         doc: Excitation wavelength of stimulation light (nanometers).
         required: true
-      - name: model
-        dtype: text
-        doc: Model of light source device.
-        required: false
       - name: filter_description
         dtype: text
         doc: Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'.
@@ -166,6 +162,11 @@ groups:
       - name: pulse_rate
         dtype: numeric
         doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
+        required: false
+    attributes:
+      - name: model
+        dtype: text
+        doc: Model of light source device.
         required: false
   - neurodata_type_def: OptogeneticStimulusTarget
     neurodata_type_inc: LabMetaData
