@@ -218,3 +218,4 @@ groups:
         neurodata_type_inc: VectorData
         doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.
         required: false
+
