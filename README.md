@@ -12,7 +12,7 @@ This is a <a href="https://www.nwb.org/">NeuroData Without Borders (NWB)</a> ext
 * `OptogeneticStimulusPattern` stores parameters for a generic photostimulation pattern.
     * `TemporalFocusing` stores parameters associated with the temporal focusing pattern.
     * `SpiralScanning` stores parameters associated with the spiral scanning pattern.
-* `OptogeneticStimulusTarget` container stored a subset of targeted ROIs `targeted_rois`, that is a `DynamicTableRegion` referencing the rows of a `PlaneSegmentation`. Optionally, we can store the corresponding segmented ROIs that have been successfully photostimulated. `segmented_rois` is also a `DynamicTableRegion` referencing the rows of a `PlaneSegmentation`. Since not all targeted ROIs may result in an actual photostimulation a `global_roi_ids` column should be added to both `PlaneSegmentation` object to express the corrispondence between the targeted and segmented ROIs.
+* `OptogeneticStimulusTarget` container stored a subset of targeted ROIs `targeted_rois`, that is a `DynamicTableRegion` referencing the rows of a `PlaneSegmentation`. Optionally, we can store the corresponding segmented ROIs that have been successfully photostimulated. `segmented_rois` is also a `DynamicTableRegion` referencing the rows of a `PlaneSegmentation`. Since not all targeted ROIs may result in an actual photostimulation a `global_roi_ids` column should be added to both `PlaneSegmentation` object to express the correspondence between the targeted and segmented ROIs.
 * `PhotostimulationTable` is an `TimeIntervals` table. Each row stores a stimulus onset - defined by `start`, `stop`, `power` (optionally `frequency` and `pulse_width`). Each stimulus onset reference a specific `OptogeneticStimulusTarget` and `PhotostimulationPattern`
 NB: `power`(`frequency` and `pulse_width`) can be defined either as scalar and as 1D array. If defined as scalar, it is assumed that all the ROIs in `targets` receive the same stimulus `power`(`frequency` and `pulse_width`). If defined as 1D array, the length must equal to the number of ROIs in targets, so we can define different `power`,`frequency` and `pulse_width` for each targeted ROI.
 
@@ -236,8 +236,8 @@ imaging_plane = nwbfile.create_imaging_plane(
 )
 
 
-# All the ROIs simulataneously illuminated are stored in `targeted_rois` in an `OptogeneticStimulusTarget` container, as a table region referencing the `TargetPlaneSegmentation`.
-# In this example, the targeted ROIs are 45 in total, divided in 3 groups of 15 ROIs that will be simulataneously illuminated with the same stimulus pattern. Only 30 of them, 10 for each group, results in a successful photostimulation.
+# All the ROIs simultaneously illuminated are stored in `targeted_rois` in an `OptogeneticStimulusTarget` container, as a table region referencing the `TargetPlaneSegmentation`.
+# In this example, the targeted ROIs are 45 in total, divided in 3 groups of 15 ROIs that will be simultaneously illuminated with the same stimulus pattern. Only 30 of them, 10 for each group, results in a successful photostimulation.
 # Therefore, we define a `PlaneSegmentation` containing 30 ROIs in total and 3 `roi_table_region` containing 10 ROIs each that would be segmented after being stimulated, and stored in three separate `OptogeneticStimulusTarget` containers.
 n_targeted_rois = 45
 n_targeted_rois_per_group = n_targeted_rois // 3
