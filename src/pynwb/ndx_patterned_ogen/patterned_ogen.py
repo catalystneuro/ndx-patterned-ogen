@@ -228,6 +228,7 @@ class OptogeneticStimulusTarget(LabMetaData):
                 "A table region referencing a PlaneSegmentation object storing segmented ROIs that receive"
                 " photostimulation."
             ),
+            "default": None,
         },
         {
             "name": "targeted_rois",
