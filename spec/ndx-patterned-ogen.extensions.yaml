@@ -15,13 +15,30 @@ groups:
           If 'sweep_size' is a two dimensional array, the the sweep pattern is assumed to be a
           rectangle, with dimensions [width, height].
         quantity: "?"
+        dims:
+        - diameter
+        - width, height
+        shape:
+        - - 1
+        - - 2
+        attributes:
+        - name: unit
+          value: micrometers
+          doc: unit of measure of the scanning sweep pattern size, fixed to micrometers
+          dtype: text
       - name: sweep_mask
         dtype: numeric
         doc:
           Scanning sweep pattern designated using a mask of size [width, height] for 2D stimulation,
           where for a given pixel a value of 1 indicates stimulation, and a
           value of 0 indicates no stimulation.
-        quantity: "?"
+        quantity: "?"        
+        dims:
+        - num_rows
+        - num_cols
+        shape:
+        - 
+        -
   - neurodata_type_def: OptogeneticStimulus3DPattern
     neurodata_type_inc: LabMetaData
     doc: Container to store the information about a generic 3D stimulus pattern (spatial information).
@@ -37,14 +54,33 @@ groups:
           assumed to be a cylinder (for 3D patterns), with diameter 'sweep_size'.
           If 'sweep_size' is a three dimensional array, the the sweep pattern is assumed to be a
           cuboid, with dimensions [width, height, depth].
-        quantity: "?"
+        quantity: "?"        
+        dims:
+        - diameter
+        - width, height, depth
+        shape:
+        - - 1
+        - - 3
+        attributes:
+        - name: unit
+          value: micrometers
+          doc: unit of measure of the scanning sweep pattern size, fixed to micrometers
+          dtype: text
       - name: sweep_mask
         dtype: numeric
         doc:
           Scanning sweep pattern designated using a mask of size [width,height, depth] for 3D stimulation,
           where for a given pixel a value of 1 indicates stimulation, and a
           value of 0 indicates no stimulation.
-        quantity: "?"
+        quantity: "?"        
+        dims:
+        - num_rows
+        - num_cols
+        - num_planes
+        shape:
+        - 
+        -
+        -
   - neurodata_type_def: SpiralScanning
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a spiral scanning pattern.
@@ -52,6 +88,11 @@ groups:
       - name: diameter
         dtype: numeric
         doc: Spiral diameter (in micrometers).
+        attributes:
+        - name: unit
+          value: micrometers
+          doc: unit of measure of the spiral diameter, fixed to micrometers
+          dtype: text
       - name: number_of_revolutions
         dtype: numeric
         doc: Number of turns within a spiral.
@@ -59,6 +100,11 @@ groups:
         dtype: numeric
         doc: Spiral height of each sweep (in micrometers).
         quantity: "?"
+        attributes:
+        - name: unit
+          value: micrometers
+          doc: unit of measure of the spiral height, fixed to micrometers
+          dtype: text
     attributes:
       - name: description
         dtype: text
@@ -92,7 +138,7 @@ groups:
         doc: Light-activated effector protein expressed by the targeted cell (e.g., ChR2).
     links:
       - name: light_source
-        target_type: LightSource
+        target_type: Device
         doc: Light source used to apply photostimulation.
       - name: spatial_light_modulator
         target_type: Device
@@ -111,6 +157,10 @@ groups:
         dtype: numeric
         doc: Resolution of spatial light modulator (in pixels), formatted as [width, height].
         quantity: "?"
+        dims:
+        - width, height
+        shape:
+        - 2
   - neurodata_type_def: SpatialLightModulator3D
     neurodata_type_inc: Device
     doc: 3D spatial light modulator used in the experiment.
@@ -124,6 +174,10 @@ groups:
         dtype: numeric
         doc: Resolution of spatial light modulator (in pixels), formatted as [width, height, depth].
         quantity: "?"
+        dims:
+        - width, height, depth
+        shape:
+        - 3
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
     doc: Light source used in the experiment.
@@ -131,6 +185,11 @@ groups:
       - name: stimulation_wavelength
         dtype: numeric
         doc: Excitation wavelength of stimulation light (nanometers).
+        attributes:
+        - name: unit
+          value: nanometers
+          doc: unit of measure of wavelength which is fixed to nanometers
+          dtype: text
       - name: filter_description
         dtype: text
         doc: Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'.
@@ -139,22 +198,47 @@ groups:
         dtype: numeric
         doc: Incident power of stimulation device (in Watts).
         quantity: "?"
+        attributes:
+        - name: unit
+          value: Watts
+          doc: unit of measure of power which is fixed to Watts
+          dtype: text
       - name: peak_pulse_energy
         dtype: numeric
         doc: If device is pulsed light source, pulse energy (in Joules).
+        attributes:
+        - name: unit
+          value: Joules
+          doc: unit of measure of energy which is fixed to Joules
+          dtype: text
         quantity: "?"
       - name: intensity
         dtype: numeric
         doc: Intensity of the excitation in W/m^2, if known.
         quantity: "?"
+        attributes:
+        - name: unit
+          value: W/m^2
+          doc: unit of measure of intensity which is fixed to Watts per square meters
+          dtype: text        
       - name: exposure_time
         dtype: numeric
         doc: Exposure time of the sample (in sec).
         quantity: "?"
+        attributes:
+        - name: unit
+          value: seconds
+          doc: unit of measure of exposure time which is fixed to seconds
+          dtype: text   
       - name: pulse_rate
         dtype: numeric
         doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
         quantity: "?"
+        attributes:
+        - name: unit
+          value: Hz
+          doc: unit of measure of rate which is fixed to Hertz
+          dtype: text   
     attributes:
       - name: model
         dtype: text
@@ -178,6 +262,11 @@ groups:
       - name: power
         neurodata_type_inc: VectorData
         doc: Power (in Watts) applied to each target during patterned photostimulation.
+        attributes:
+        - name: unit
+          value: Watts
+          doc: unit of measure of power which is fixed to Watts
+          dtype: text
       - name: targets
         neurodata_type_inc: VectorData
         dtype:
@@ -200,7 +289,17 @@ groups:
         neurodata_type_inc: VectorData
         doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz).
         quantity: "?"
+        attributes:
+        - name: unit
+          value: Hz
+          doc: unit of measure of frequency which is fixed to Hertz
+          dtype: text
       - name: pulse_width
         neurodata_type_inc: VectorData
         doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.
         quantity: "?"
+        attributes:
+        - name: unit
+          value: seconds/phase
+          doc: unit of measure of power which is fixed to seconds/phase
+          dtype: text
