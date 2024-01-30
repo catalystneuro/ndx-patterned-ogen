@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from hdmf.utils import docval, popargs_to_dict, get_docval#, popargs
+from hdmf.utils import docval, popargs_to_dict, get_docval  # , popargs
 from pynwb import register_class
 from pynwb.core import DynamicTableRegion
 from pynwb.device import Device
@@ -433,19 +433,25 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {"name": "stop_time", "description": "Stop time of stimulation, in seconds", "required": True},
         {
             "name": "power",
-            "description": "Power (in Watts) defined as a scalar. All rois in target receive the same photostimulation power.",
+            "description": (
+                "Power (in Watts) defined as a scalar. All rois in target receive the same photostimulation power."
+            ),
             "required": False,
         },
         {
             "name": "frequency",
-            "description": "Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same"
-                " frequency.",
+            "description": (
+                "Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same"
+                " frequency."
+            ),
             "required": False,
         },
         {
             "name": "pulse_width",
-            "description": "Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with"
-                " the same pulse width.",
+            "description": (
+                "Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with"
+                " the same pulse width."
+            ),
             "required": False,
         },
         {
@@ -460,7 +466,9 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         },
         {
             "name": "pulse_width_per_rois",
-            "description": "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target.",
+            "description": (
+                "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target."
+            ),
             "required": False,
         },
         {"name": "targets", "description": "Targeted rois for the stimulus onset.", "required": True},
@@ -498,31 +506,31 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         super().__init__(**kwargs)
         for key, val in args_to_set.items():
             setattr(self, key, val)
-        # columns = popargs('columns', kwargs)
+        # columns = popargs("columns", kwargs)
         # if columns is not None:
         #     colset = {c.name: c for c in columns}
         #     if "power_per_rois" in colset.keys() and "power" in colset.keys():
-        #         raise ValueError(
-        #             "Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined"
-        #         )
+        #         raise ValueError("Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined")
         #     print(colset)
         #     for column in columns:
         #         for row in range(len(column)):
         #             if "power" in colset.keys() and isinstance(colset["power"][row], (list, np.ndarray, tuple)):
         #                 raise ValueError(
-        #                     "'power' should be defined as scalar. Use 'power_per_rois' to store photostimulation at different"
-        #                     " powers, for each rois in target."
+        #                     "'power' should be defined as scalar. Use 'power_per_rois' to store photostimulation at"
+        #                     " different powers, for each rois in target."
         #                 )
         #             if "frequency" in colset.keys() and isinstance(colset["frequency"][row], (list, np.ndarray, tuple)):
         #                 raise ValueError(
-        #                     "'frequency' should be defined as scalar. Use 'frequency_per_rois' to store photostimulation at"
-        #                     " different frequency, for each rois in target."
+        #                     "'frequency' should be defined as scalar. Use 'frequency_per_rois' to store"
+        #                     " photostimulation at different frequency, for each rois in target."
         #                 )
 
-        #             if "pulse_width" in colset.keys() and  isinstance(colset["pulse_width"][row], (list, np.ndarray, tuple)):
+        #             if "pulse_width" in colset.keys() and isinstance(
+        #                 colset["pulse_width"][row], (list, np.ndarray, tuple)
+        #             ):
         #                 raise ValueError(
-        #                     "'pulse_width' should be defined as scalar. Use 'pulse_width_per_rois' to store photostimulation with"
-        #                     " different pulse width, for each rois in target."
+        #                     "'pulse_width' should be defined as scalar. Use 'pulse_width_per_rois' to store"
+        #                     " photostimulation with different pulse width, for each rois in target."
         #                 )
 
         #             n_targets = len(colset["targets"][row].targeted_rois[:])
@@ -550,8 +558,6 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         #                         f"'pulse_width_per_rois' has {n_elements} elements but it must have"
         #                         f" {n_targets} elements as 'targeted_roi'."
         #                     )
-                    
-
 
     @docval(
         {"name": "start_time", "doc": "Start time of stimulation, in seconds.", "type": float},
@@ -564,15 +570,19 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         },
         {
             "name": "frequency",
-            "doc": "Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same"
-                " frequency.",
+            "doc": (
+                "Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same"
+                " frequency."
+            ),
             "type": (int, float, Iterable),
             "default": None,
         },
         {
             "name": "pulse_width",
-            "doc": "Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with"
-                " the same pulse width.",
+            "doc": (
+                "Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with"
+                " the same pulse width."
+            ),
             "type": (int, float, Iterable),
             "default": None,
         },
@@ -590,7 +600,9 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         },
         {
             "name": "pulse_width_per_rois",
-            "doc": "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target.",
+            "doc": (
+                "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target."
+            ),
             "type": (int, float, Iterable),
             "default": None,
         },
@@ -659,13 +671,11 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
                     f"'pulse_width_per_rois' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
-            
+
         if kwargs["power_per_rois"] is None and kwargs["power"] is None:
             raise ValueError(
                 "Nor 'power' or 'power_per_rois' has been defined. At least one of the two must be defined"
             )
-        
+
         if kwargs["power_per_rois"] is not None and kwargs["power"] is not None:
-            raise ValueError(
-                "Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined"
-            )
+            raise ValueError("Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined")
