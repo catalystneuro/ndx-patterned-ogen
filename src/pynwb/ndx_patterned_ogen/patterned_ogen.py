@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from hdmf.utils import docval, popargs_to_dict, get_docval, popargs
+from hdmf.utils import docval, popargs_to_dict, get_docval#, popargs
 from pynwb import register_class
 from pynwb.core import DynamicTableRegion
 from pynwb.device import Device
@@ -498,58 +498,58 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         super().__init__(**kwargs)
         for key, val in args_to_set.items():
             setattr(self, key, val)
-        columns = popargs('columns', kwargs)
-        if columns is not None:
-            colset = {c.name: c for c in columns}
-            if "power_per_rois" in colset.keys() and "power" in colset.keys():
-                raise ValueError(
-                    "Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined"
-                )
-            print(colset)
-            for column in columns:
-                for row in range(len(column)):
-                    if "power" in colset.keys() and isinstance(colset["power"][row], (list, np.ndarray, tuple)):
-                        raise ValueError(
-                            "'power' should be defined as scalar. Use 'power_per_rois' to store photostimulation at different"
-                            " powers, for each rois in target."
-                        )
-                    if "frequency" in colset.keys() and isinstance(colset["frequency"][row], (list, np.ndarray, tuple)):
-                        raise ValueError(
-                            "'frequency' should be defined as scalar. Use 'frequency_per_rois' to store photostimulation at"
-                            " different frequency, for each rois in target."
-                        )
+        # columns = popargs('columns', kwargs)
+        # if columns is not None:
+        #     colset = {c.name: c for c in columns}
+        #     if "power_per_rois" in colset.keys() and "power" in colset.keys():
+        #         raise ValueError(
+        #             "Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined"
+        #         )
+        #     print(colset)
+        #     for column in columns:
+        #         for row in range(len(column)):
+        #             if "power" in colset.keys() and isinstance(colset["power"][row], (list, np.ndarray, tuple)):
+        #                 raise ValueError(
+        #                     "'power' should be defined as scalar. Use 'power_per_rois' to store photostimulation at different"
+        #                     " powers, for each rois in target."
+        #                 )
+        #             if "frequency" in colset.keys() and isinstance(colset["frequency"][row], (list, np.ndarray, tuple)):
+        #                 raise ValueError(
+        #                     "'frequency' should be defined as scalar. Use 'frequency_per_rois' to store photostimulation at"
+        #                     " different frequency, for each rois in target."
+        #                 )
 
-                    if "pulse_width" in colset.keys() and  isinstance(colset["pulse_width"][row], (list, np.ndarray, tuple)):
-                        raise ValueError(
-                            "'pulse_width' should be defined as scalar. Use 'pulse_width_per_rois' to store photostimulation with"
-                            " different pulse width, for each rois in target."
-                        )
+        #             if "pulse_width" in colset.keys() and  isinstance(colset["pulse_width"][row], (list, np.ndarray, tuple)):
+        #                 raise ValueError(
+        #                     "'pulse_width' should be defined as scalar. Use 'pulse_width_per_rois' to store photostimulation with"
+        #                     " different pulse width, for each rois in target."
+        #                 )
 
-                    n_targets = len(colset["targets"][row].targeted_rois[:])
+        #             n_targets = len(colset["targets"][row].targeted_rois[:])
 
-                    if "power_per_rois" in colset.keys():
-                        n_elements = len(colset["power_per_rois"][row])
-                        if n_elements != n_targets:
-                            raise ValueError(
-                                f"'power_per_rois' has {n_elements} elements but it must have"
-                                f" {n_targets} elements as 'targeted_roi'."
-                            )
+        #             if "power_per_rois" in colset.keys():
+        #                 n_elements = len(colset["power_per_rois"][row])
+        #                 if n_elements != n_targets:
+        #                     raise ValueError(
+        #                         f"'power_per_rois' has {n_elements} elements but it must have"
+        #                         f" {n_targets} elements as 'targeted_roi'."
+        #                     )
 
-                    if "frequency_per_rois" in colset.keys():
-                        n_elements = len(colset["frequency_per_rois"][row])
-                        if n_elements != n_targets:
-                            raise ValueError(
-                                f"'frequency_per_rois' has {n_elements} elements but it must have"
-                                f" {n_targets} elements as 'targeted_roi'."
-                            )
+        #             if "frequency_per_rois" in colset.keys():
+        #                 n_elements = len(colset["frequency_per_rois"][row])
+        #                 if n_elements != n_targets:
+        #                     raise ValueError(
+        #                         f"'frequency_per_rois' has {n_elements} elements but it must have"
+        #                         f" {n_targets} elements as 'targeted_roi'."
+        #                     )
 
-                    if "pulse_width_per_rois" in colset.keys():
-                        n_elements = len(colset["pulse_width_per_rois"][row])
-                        if n_elements != n_targets:
-                            raise ValueError(
-                                f"'pulse_width_per_rois' has {n_elements} elements but it must have"
-                                f" {n_targets} elements as 'targeted_roi'."
-                            )
+        #             if "pulse_width_per_rois" in colset.keys():
+        #                 n_elements = len(colset["pulse_width_per_rois"][row])
+        #                 if n_elements != n_targets:
+        #                     raise ValueError(
+        #                         f"'pulse_width_per_rois' has {n_elements} elements but it must have"
+        #                         f" {n_targets} elements as 'targeted_roi'."
+        #                     )
                     
 
 
