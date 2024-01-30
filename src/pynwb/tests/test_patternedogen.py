@@ -57,7 +57,33 @@ class TestPatternedOgenConstructor(TestCase):
         np.testing.assert_array_equal(stimulus_table.start_time[:], [start_time])
         np.testing.assert_array_equal(stimulus_table.stop_time[:], [stop_time])
 
-    def test_constructor_power_as_array(self):
+    def test_constructor_power_as_array_fail(self):
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected."""
+
+        stimulus_table = PatternedOptogeneticStimulusTable(
+            name="PatternedOptogeneticStimulusTable",
+            description="description",
+        )
+
+        start_time = 0.0
+        stop_time = 1.0
+
+        targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
+        power = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0])
+
+        interval_parameter = dict(
+            start_time=start_time,
+            stop_time=stop_time,
+            power=power,
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
+            targets=targets,
+            stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
+        )
+
+        with self.assertRaises(ValueError):
+            stimulus_table.add_interval(**interval_parameter)
+
+    def test_constructor_power_per_rois(self):
         """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -90,7 +116,7 @@ class TestPatternedOgenConstructor(TestCase):
         np.testing.assert_array_equal(stimulus_table.frequency_per_rois[:], [frequency_per_rois])
         np.testing.assert_array_equal(stimulus_table.pulse_width_per_rois[:], [pulse_width_per_rois])
 
-    def test_constructor_power_as_array_fail_for_mismatch_dim(self):
+    def test_constructor_power_per_rois_fail_for_mismatch_dim(self):
         """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -117,9 +143,72 @@ class TestPatternedOgenConstructor(TestCase):
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
         )
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as context:
             stimulus_table.add_interval(**interval_parameter)
 
+        # Assert that the error message matches the expected one
+        expected_error_message = f"'power_per_rois' has {targets.targeted_rois.shape[0]+2} elements but it must have {targets.targeted_rois.shape[0]} elements as 'targeted_roi'."
+        self.assertEqual(str(context.exception), expected_error_message)
+
+    def test_constructor_power_and_power_per_rois_both_defined_fail(self):
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected."""
+
+        stimulus_table = PatternedOptogeneticStimulusTable(
+            name="PatternedOptogeneticStimulusTable",
+            description="description",
+        )
+
+        start_time = 0.0
+        stop_time = 1.0
+
+        targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
+        power_per_rois = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0])
+        power = 50e-3
+
+        interval_parameter = dict(
+            start_time=start_time,
+            stop_time=stop_time,
+            power_per_rois=power_per_rois,
+            power=power,
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
+            targets=targets,
+            stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
+        )
+
+        with self.assertRaises(ValueError) as context:
+            stimulus_table.add_interval(**interval_parameter)
+
+        # Assert that the error message matches the expected one
+        expected_error_message = "Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined"
+        self.assertEqual(str(context.exception), expected_error_message)
+
+    def test_constructor_power_and_power_per_rois_both_not_defined_fail(self):
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected."""
+
+        stimulus_table = PatternedOptogeneticStimulusTable(
+            name="PatternedOptogeneticStimulusTable",
+            description="description",
+        )
+
+        start_time = 0.0
+        stop_time = 1.0
+
+        targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
+
+        interval_parameter = dict(
+            start_time=start_time,
+            stop_time=stop_time,
+            stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
+            targets=targets,
+            stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
+        )
+
+        with self.assertRaises(ValueError) as context:
+            stimulus_table.add_interval(**interval_parameter)
+
+        # Assert that the error message matches the expected one
+        expected_error_message = "Nor 'power' or 'power_per_rois' has been defined. At least one of the two must be defined"
+        self.assertEqual(str(context.exception), expected_error_message)
 
 class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
     """Simple roundtrip test for PatternedOptogeneticStimulusTable."""

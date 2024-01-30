@@ -605,3 +605,13 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
                     f"'pulse_width_per_rois' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
+            
+        if kwargs["power_per_rois"] is None and kwargs["power"] is None:
+            raise ValueError(
+                "Nor 'power' or 'power_per_rois' has been defined. At least one of the two must be defined"
+            )
+        
+        if kwargs["power_per_rois"] is not None and kwargs["power"] is not None:
+            raise ValueError(
+                "Both 'power' and 'power_per_rois' has been defined. Only one of them must be defined"
+            )
