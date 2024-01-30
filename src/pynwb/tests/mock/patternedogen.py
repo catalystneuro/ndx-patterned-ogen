@@ -26,7 +26,7 @@ from ndx_patterned_ogen import (
 def mock_OptogeneticStimulus2DPattern(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus 2D pattern",
-    sweep_size: float = 5,  # um
+    sweep_size: list = [5],  # um
     sweep_mask=np.zeros((10, 10)),
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulus2DPattern:
@@ -43,7 +43,7 @@ def mock_OptogeneticStimulus2DPattern(
 def mock_OptogeneticStimulus3DPattern(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus 3D pattern",
-    sweep_size: float = 5,  # um
+    sweep_size: list = [5],  # um
     sweep_mask=np.zeros((10, 10, 2)),
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulus3DPattern:
