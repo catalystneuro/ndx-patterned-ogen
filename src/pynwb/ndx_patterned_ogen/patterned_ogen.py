@@ -7,149 +7,6 @@ from pynwb.file import LabMetaData, TimeIntervals
 from pynwb.ogen import OptogeneticStimulusSite
 
 namespace = "ndx-patterned-ogen"
-
-
-@register_class("SpatialLightModulator3D", namespace)
-class SpatialLightModulator3D(Device):
-    """
-    Spatial light modulator used in the experiment.
-    """
-
-    __nwbfields__ = ("model", "spatial_resolution")
-
-    @docval(
-        {"name": "name", "type": str, "doc": "Name of SpatialLightModulator3D object."},
-        *get_docval(Device.__init__, "description", "manufacturer"),
-        {
-            "name": "model",
-            "type": str,
-            "doc": "The model specification of the spatial light modulator (e.g. 'NeuraLight 3D Ultra', from Bruker).",
-        },
-        {
-            "name": "spatial_resolution",
-            "type": Iterable,
-            "doc": "Resolution of spatial light modulator (in pixels), formatted as [width, height, depth].",
-            "default": None,
-            "shape": (3,),
-        },
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = ("model", "spatial_resolution")
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
-
-@register_class("SpatialLightModulator2D", namespace)
-class SpatialLightModulator2D(Device):
-    """
-    Spatial light modulator used in the experiment.
-    """
-
-    __nwbfields__ = ("model", "spatial_resolution")
-
-    @docval(
-        {"name": "name", "type": str, "doc": "Name of SpatialLightModulator3D object. "},
-        *get_docval(Device.__init__, "description", "manufacturer"),
-        {
-            "name": "model",
-            "type": str,
-            "doc": "The model specification of the spatial light modulator (e.g. 'X15213 series', from Hamamatsu).",
-        },
-        {
-            "name": "spatial_resolution",
-            "type": Iterable,
-            "doc": "Resolution of spatial light modulator (in pixels), formatted as [width, height].",
-            "default": None,
-            "shape": (2,),
-        },
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = ("model", "spatial_resolution")
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
-
-@register_class("LightSource", namespace)
-class LightSource(Device):
-    """
-    Light source used in the experiment.
-    """
-
-    __nwbfields__ = (
-        "model",
-        "stimulation_wavelength",
-        "peak_power",
-        "filter_descriptionpeak_pulse_energy",
-        "intensity",
-        "pulse_rate",
-        "exposure_time",
-    )
-
-    @docval(
-        {"name": "name", "type": str, "doc": "Name of LightSource object."},
-        *get_docval(Device.__init__, "description", "manufacturer"),
-        {"name": "model", "type": str, "doc": "Model of light source device."},
-        {
-            "name": "stimulation_wavelength",
-            "type": (int, float),
-            "doc": "Excitation wavelength of stimulation light (nanometers).",
-            "default": None,
-        },
-        {
-            "name": "peak_power",
-            "type": (int, float),
-            "doc": "Incident power of stimulation device (in Watts).",
-            "default": None,
-        },
-        {
-            "name": "filter_description",
-            "type": str,
-            "doc": (
-                "Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'."
-            ),
-            "default": None,
-        },
-        {
-            "name": "peak_pulse_energy",
-            "type": (int, float),
-            "doc": "If device is pulsed light source, pulse energy (in Joules).",
-            "default": None,
-        },
-        {
-            "name": "intensity",
-            "type": (int, float),
-            "doc": "Intensity of the excitation in W/m^2, if known.",
-            "default": None,
-        },
-        {
-            "name": "pulse_rate",
-            "type": (int, float),
-            "doc": "If device is pulsed light source, pulse rate (in Hz) used for stimulation.",
-            "default": None,
-        },
-        {"name": "exposure_time", "type": (int, float), "doc": "Exposure time of the sample (in sec)", "default": None},
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = (
-            "model",
-            "stimulation_wavelength",
-            "peak_power",
-            "filter_description",
-            "peak_pulse_energy",
-            "intensity",
-            "pulse_rate",
-            "exposure_time",
-        )
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
-
 @register_class("PatternedOptogeneticStimulusSite", namespace)
 class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
     """
@@ -168,10 +25,10 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         },
         {
             "name": "spatial_light_modulator",
-            "type": (SpatialLightModulator3D, SpatialLightModulator2D),
+            "type": Device,
             "doc": "Spatial light modulator used to generate photostimulation pattern.",
         },
-        {"name": "light_source", "type": LightSource, "doc": "Light source used to apply photostimulation."},
+        {"name": "light_source", "type": Device, "doc": "Light source used to apply photostimulation."},
     )
     def __init__(self, **kwargs):
         keys_to_set = ("effector", "spatial_light_modulator", "light_source")
@@ -183,7 +40,7 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
     @docval(
         {
             "name": "spatial_light_modulator",
-            "type": (SpatialLightModulator3D, SpatialLightModulator2D),
+            "type": Device,
             "doc": "Spatial light modulator used to generate photostimulation pattern. ",
         }
     )
@@ -196,7 +53,7 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         else:
             self.spatial_light_modulator = spatial_light_modulator
 
-    @docval({"name": "light_source", "type": LightSource, "doc": "Light source used to apply photostimulation."})
+    @docval({"name": "light_source", "type": Device, "doc": "Light source used to apply photostimulation."})
     def add_light_source(self, light_source):
         """
         Add a light source to the photostimulation method.
@@ -242,183 +99,6 @@ class OptogeneticStimulusTarget(LabMetaData):
         super().__init__(**kwargs)
         for key, val in args_to_set.items():
             setattr(self, key, val)
-
-
-@register_class("OptogeneticStimulus2DPattern", namespace)
-class OptogeneticStimulus2DPattern(LabMetaData):
-    """
-    Container to store the information about a generic 2D stimulus pattern (spatial information).
-    """
-
-    __nwbfields__ = ("description", "sweep_size", "sweep_mask")
-
-    @docval(
-        *get_docval(LabMetaData.__init__, "name"),
-        {
-            "name": "description",
-            "type": str,
-            "doc": (
-                "Description of the scanning or scanless method for shaping optogenetic light. Examples include"
-                " diffraction limited points, 3D shot, disks, etc."
-            ),
-        },
-        {
-            "name": "sweep_size",
-            "type": (int, float, Iterable),
-            "doc": (
-                "Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is"
-                " assumed to be a circle (for 2D patterns) with diameter 'sweep_size'."
-                " If 'sweep_size' is a two dimensional array, the the sweep pattern is assumed to be a"
-                " rectangle, with dimensions [width, height]."
-            ),
-            "default": None,
-        },
-        {
-            "name": "sweep_mask",
-            "type": Iterable,
-            "doc": (
-                "Scanning sweep pattern designated using a mask of size [width, height] for 2D stimulation,"
-                " where for a given pixel a value of 1 indicates stimulation, and a"
-                " value of 0 indicates no stimulation."
-            ),
-            "default": None,
-        },
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = ("description", "sweep_size", "sweep_mask")
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
-
-@register_class("OptogeneticStimulus3DPattern", namespace)
-class OptogeneticStimulus3DPattern(LabMetaData):
-    """
-    Container to store the information about a generic 3D stimulus pattern (spatial information).
-    """
-
-    __nwbfields__ = ("description", "sweep_size", "sweep_mask")
-
-    @docval(
-        *get_docval(LabMetaData.__init__, "name"),
-        {
-            "name": "description",
-            "type": str,
-            "doc": (
-                "Description of the scanning or scanless method for shaping optogenetic light. Examples include"
-                " diffraction limited points, 3D shot, disks, etc."
-            ),
-        },
-        {
-            "name": "sweep_size",
-            "type": (int, float, Iterable),
-            "doc": (
-                "Size of the scanning sweep pattern in micrometers. If a scalar is provided, the sweep pattern is"
-                " assumed to be a cylinder (for 3D patterns), with diameter 'sweep_size'."
-                " If 'sweep_size' is a three dimensional array, the the sweep pattern is assumed to be a"
-                " cuboid, with dimensions [width, height, depth]."
-            ),
-            "default": None,
-        },
-        {
-            "name": "sweep_mask",
-            "type": Iterable,
-            "doc": (
-                "Scanning sweep pattern designated using a mask of size [width, height, depth] for 3D stimulation,"
-                " where for a given pixel a value of 1 indicates stimulation, and a"
-                " value of 0 indicates no stimulation."
-            ),
-            "default": None,
-        },
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = ("description", "sweep_size", "sweep_mask")
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
-
-@register_class("TemporalFocusing", namespace)
-class TemporalFocusing(LabMetaData):
-    """
-    Container to store the parameters defining a temporal focusing beam-shaping
-    """
-
-    __nwbfields__ = ("description", "lateral_point_spread_function", "axial_point_spread_function")
-
-    @docval(
-        *get_docval(LabMetaData.__init__, "name"),
-        {
-            "name": "description",
-            "type": str,
-            "doc": "Describe any additional details about the pattern.",
-            "default": None,
-        },
-        {
-            "name": "lateral_point_spread_function",
-            "type": str,
-            "doc": "Estimated lateral spatial profile or point spread function, expressed as mean [um] ± s.d [um].",
-            "default": None,
-        },
-        {
-            "name": "axial_point_spread_function",
-            "type": str,
-            "doc": "Estimated axial spatial profile or point spread function, expressed as mean [um] ± s.d [um]",
-            "default": None,
-        },
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = ("description", "lateral_point_spread_function", "axial_point_spread_function")
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
-
-@register_class("SpiralScanning", namespace)
-class SpiralScanning(LabMetaData):
-    """
-    Container to store the parameters defining a spiral scanning pattern.
-    """
-
-    __nwbfields__ = ("description", "diameter", "height", "number_of_revolutions")
-
-    @docval(
-        *get_docval(LabMetaData.__init__, "name"),
-        {
-            "name": "description",
-            "type": str,
-            "doc": "Describe any additional details about the pattern.",
-            "default": None,
-        },
-        {
-            "name": "diameter",
-            "type": (int, float),
-            "doc": "Spiral diameter (in micrometers).",
-            "default": None,
-        },
-        {
-            "name": "height",
-            "type": (int, float),
-            "doc": "Spiral height of each sweep (in micrometers).",
-            "default": None,
-        },
-        {
-            "name": "number_of_revolutions",
-            "type": int,
-            "doc": "Number of turns within a spiral.",
-            "default": None,
-        },
-    )
-    def __init__(self, **kwargs):
-        keys_to_set = ("description", "diameter", "height", "number_of_revolutions")
-        args_to_set = popargs_to_dict(keys_to_set, kwargs)
-        super().__init__(**kwargs)
-        for key, val in args_to_set.items():
-            setattr(self, key, val)
-
 
 @register_class("PatternedOptogeneticStimulusTable", namespace)
 class PatternedOptogeneticStimulusTable(TimeIntervals):
@@ -510,7 +190,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {
             "name": "stimulus_pattern",
             "doc": "Link to the stimulus pattern.",
-            "type": (OptogeneticStimulus3DPattern,OptogeneticStimulus2DPattern, TemporalFocusing, SpiralScanning),
+            "type": LabMetaData,
         },
         {
             "name": "stimulus_site",
