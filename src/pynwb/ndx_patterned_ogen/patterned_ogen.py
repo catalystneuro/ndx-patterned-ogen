@@ -433,17 +433,34 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {"name": "stop_time", "description": "Stop time of stimulation, in seconds", "required": True},
         {
             "name": "power",
-            "description": "Power (in Watts) applied to each target during patterned photostimulation.",
-            "required": True,
+            "description": "Power (in Watts) defined as a scalar. All rois in target receive the same photostimulation power.",
+            "required": False,
         },
         {
             "name": "frequency",
-            "description": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz).",
+            "description": "Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same"
+                " frequency.",
             "required": False,
         },
         {
             "name": "pulse_width",
-            "description": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.",
+            "description": "Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with"
+                " the same pulse width.",
+            "required": False,
+        },
+        {
+            "name": "power_per_rois",
+            "description": "Power (in Watts) defined as an array. Each power value refers to each roi in target.",
+            "required": False,
+        },
+        {
+            "name": "frequency_per_rois",
+            "description": "Frequency (in Hz) defined as an array. Each frequency value refers to each roi in target.",
+            "required": False,
+        },
+        {
+            "name": "pulse_width_per_rois",
+            "description": "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target.",
             "required": False,
         },
         {"name": "targets", "description": "Targeted rois for the stimulus onset.", "required": True},
@@ -487,21 +504,41 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         {"name": "stop_time", "doc": "Stop time of stimulation, in seconds.", "type": float},
         {
             "name": "power",
-            "doc": "Power (in Watts) applied to each target during patterned photostimulation.",
+            "doc": "Power (in Watts) defined as a scalar. All rois in target receive the same photostimulation power.",
             "type": (int, float, Iterable),
-            "default": 0.0,
+            "default": None,
         },
         {
             "name": "frequency",
-            "doc": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz).",
+            "doc": "Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same"
+                " frequency.",
             "type": (int, float, Iterable),
-            "default": 0.0,
+            "default": None,
         },
         {
             "name": "pulse_width",
-            "doc": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.",
+            "doc": "Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with"
+                " the same pulse width.",
             "type": (int, float, Iterable),
-            "default": 0.0,
+            "default": None,
+        },
+        {
+            "name": "power_per_rois",
+            "doc": "Power (in Watts) defined as an array. Each power value refers to each roi in target.",
+            "type": (int, float, Iterable),
+            "default": None,
+        },
+        {
+            "name": "frequency_per_rois",
+            "doc": "Frequency (in Hz) defined as an array. Each frequency value refers to each roi in target.",
+            "type": (int, float, Iterable),
+            "default": None,
+        },
+        {
+            "name": "pulse_width_per_rois",
+            "doc": "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target.",
+            "type": (int, float, Iterable),
+            "default": None,
         },
         {
             "name": "targets",
@@ -525,28 +562,46 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         Add a stimulation parameters for a specific stimulus onset.
         """
         super(PatternedOptogeneticStimulusTable, self).add_interval(**kwargs)
-     
-        n_targets = len(kwargs["targets"].targeted_rois[:])
 
         if isinstance(kwargs["power"], (list, np.ndarray, tuple)):
-            n_elements = len(kwargs["power"])
-            if n_elements != n_targets:
-                raise ValueError(
-                    f"'power' has {n_elements} elements but it must have"
-                    f" {n_targets} elements as 'targeted_roi'."
-                )
+            raise ValueError(
+                "'power' should be defined as scalar. Use 'power_per_rois' to store photostimulation at different"
+                " powers, for each rois in target."
+            )
         if isinstance(kwargs["frequency"], (list, np.ndarray, tuple)):
-            n_elements = len(kwargs["frequency"])
+            raise ValueError(
+                "'frequency' should be defined as scalar. Use 'frequency_per_rois' to store photostimulation at"
+                " different frequency, for each rois in target."
+            )
+
+        if isinstance(kwargs["pulse_width"], (list, np.ndarray, tuple)):
+            raise ValueError(
+                "'pulse_width' should be defined as scalar. Use 'pulse_width_per_rois' to store photostimulation with"
+                " different pulse width, for each rois in target."
+            )
+
+        n_targets = len(kwargs["targets"].targeted_rois[:])
+
+        if kwargs["power_per_rois"] is not None:
+            n_elements = len(kwargs["power_per_rois"])
             if n_elements != n_targets:
                 raise ValueError(
-                    f"'frequency' has {n_elements} elements but it must have"
+                    f"'power_per_rois' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
 
-        if isinstance(kwargs["pulse_width"], (list, np.ndarray, tuple)):
-            n_elements = len(kwargs["pulse_width"])
+        if kwargs["frequency_per_rois"] is not None:
+            n_elements = len(kwargs["frequency_per_rois"])
             if n_elements != n_targets:
                 raise ValueError(
-                    f"'pulse_width' has {n_elements} elements but it must have"
+                    f"'frequency_per_rois' has {n_elements} elements but it must have"
+                    f" {n_targets} elements as 'targeted_roi'."
+                )
+
+        if kwargs["pulse_width_per_rois"] is not None:
+            n_elements = len(kwargs["pulse_width_per_rois"])
+            if n_elements != n_targets:
+                raise ValueError(
+                    f"'pulse_width_per_rois' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )

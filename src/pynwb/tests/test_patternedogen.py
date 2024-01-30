@@ -69,16 +69,16 @@ class TestPatternedOgenConstructor(TestCase):
         stop_time = 1.0
 
         targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
-        power = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0])
-        frequency = np.random.uniform(20.0, 100.0, targets.targeted_rois.shape[0])
-        pulse_width = np.random.uniform(0.1, 0.2, targets.targeted_rois.shape[0])
+        power_per_rois = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0])
+        frequency_per_rois = np.random.uniform(20.0, 100.0, targets.targeted_rois.shape[0])
+        pulse_width_per_rois = np.random.uniform(0.1, 0.2, targets.targeted_rois.shape[0])
 
         stimulus_table.add_interval(
             start_time=start_time,
             stop_time=stop_time,
-            power=power,
-            frequency=frequency,
-            pulse_width=pulse_width,
+            power_per_rois=power_per_rois,
+            frequency_per_rois=frequency_per_rois,
+            pulse_width_per_rois=pulse_width_per_rois,
             stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=targets,
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
@@ -86,11 +86,11 @@ class TestPatternedOgenConstructor(TestCase):
 
         self.assertEqual(stimulus_table.name, "PatternedOptogeneticStimulusTable")
         self.assertEqual(stimulus_table.description, "description")
-        np.testing.assert_array_equal(stimulus_table.power[:], [power])
-        np.testing.assert_array_equal(stimulus_table.frequency[:], [frequency])
-        np.testing.assert_array_equal(stimulus_table.pulse_width[:], [pulse_width])
+        np.testing.assert_array_equal(stimulus_table.power_per_rois[:], [power_per_rois])
+        np.testing.assert_array_equal(stimulus_table.frequency_per_rois[:], [frequency_per_rois])
+        np.testing.assert_array_equal(stimulus_table.pulse_width_per_rois[:], [pulse_width_per_rois])
 
-    def test_constructor_power_as_array_fail(self):
+    def test_constructor_power_as_array_fail_for_mismatch_dim(self):
         """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -102,16 +102,16 @@ class TestPatternedOgenConstructor(TestCase):
         stop_time = 1.0
 
         targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
-        power = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0] + 2)
-        frequency = np.random.uniform(20.0, 100.0, targets.targeted_rois.shape[0])
-        pulse_width = np.random.uniform(0.1, 0.2, targets.targeted_rois.shape[0])
+        power_per_rois = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0]+2)
+        frequency_per_rois = np.random.uniform(20.0, 100.0, targets.targeted_rois.shape[0])
+        pulse_width_per_rois = np.random.uniform(0.1, 0.2, targets.targeted_rois.shape[0])
 
         interval_parameter = dict(
             start_time=start_time,
             stop_time=stop_time,
-            power=[power],
-            frequency=[frequency],
-            pulse_width=[pulse_width],
+            power_per_rois=power_per_rois,
+            frequency_per_rois=frequency_per_rois,
+            pulse_width_per_rois=pulse_width_per_rois,
             stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=targets,
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
@@ -184,16 +184,16 @@ class TestPatternedOptogeneticStimulusTableSimpleRoundtrip(TestCase):
         start_time = 0.0
         stop_time = 1.0
         targets = mock_OptogeneticStimulusTarget(nwbfile=self.nwbfile)
-        power = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0])
-        frequency = np.random.uniform(20.0, 100.0, targets.targeted_rois.shape[0])
-        pulse_width = np.random.uniform(0.1, 0.2, targets.targeted_rois.shape[0])
+        power_per_rois = np.random.uniform(50e-3, 70e-3, targets.targeted_rois.shape[0])
+        frequency_per_rois = np.random.uniform(20.0, 100.0, targets.targeted_rois.shape[0])
+        pulse_width_per_rois = np.random.uniform(0.1, 0.2, targets.targeted_rois.shape[0])
 
         stimulus_table.add_interval(
             start_time=start_time,
             stop_time=stop_time,
-            power=power,
-            frequency=frequency,
-            pulse_width=pulse_width,
+            power_per_rois=power_per_rois,
+            frequency_per_rois=frequency_per_rois,
+            pulse_width_per_rois=pulse_width_per_rois,
             stimulus_pattern=mock_OptogeneticStimulus2DPattern(nwbfile=self.nwbfile),
             targets=targets,
             stimulus_site=mock_PatternedOptogeneticStimulusSite(nwbfile=self.nwbfile),
