@@ -6,7 +6,6 @@ groups:
       - name: description
         dtype: text
         doc: Description of the scanning or scanless method for shaping optogenetic light. Examples include diffraction limited points, 3D shot, disks, etc.
-        required: true
     datasets:
       - name: sweep_size
         dtype: numeric
@@ -15,13 +14,14 @@ groups:
           assumed to be a circle (for 2D patterns) with diameter 'sweep_size'.
           If 'sweep_size' is a two dimensional array, the the sweep pattern is assumed to be a
           rectangle, with dimensions [width, height].
+        quantity: "?"
       - name: sweep_mask
         dtype: numeric
         doc:
           Scanning sweep pattern designated using a mask of size [width, height] for 2D stimulation,
           where for a given pixel a value of 1 indicates stimulation, and a
           value of 0 indicates no stimulation.
-        required: false
+        quantity: "?"
   - neurodata_type_def: OptogeneticStimulus3DPattern
     neurodata_type_inc: LabMetaData
     doc: Container to store the information about a generic 3D stimulus pattern (spatial information).
@@ -29,7 +29,6 @@ groups:
       - name: description
         dtype: text
         doc: Description of the scanning or scanless method for shaping optogenetic light. Examples include diffraction limited points, 3D shot, disks, etc.
-        required: true
     datasets:
       - name: sweep_size
         dtype: numeric
@@ -38,14 +37,14 @@ groups:
           assumed to be a cylinder (for 3D patterns), with diameter 'sweep_size'.
           If 'sweep_size' is a three dimensional array, the the sweep pattern is assumed to be a
           cuboid, with dimensions [width, height, depth].
-        required: false
+        quantity: "?"
       - name: sweep_mask
         dtype: numeric
         doc:
           Scanning sweep pattern designated using a mask of size [width,height, depth] for 3D stimulation,
           where for a given pixel a value of 1 indicates stimulation, and a
           value of 0 indicates no stimulation.
-        required: false
+        quantity: "?"
   - neurodata_type_def: SpiralScanning
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a spiral scanning pattern.
@@ -53,15 +52,13 @@ groups:
       - name: diameter
         dtype: numeric
         doc: Spiral diameter (in micrometers).
-        required: true
       - name: number_of_revolutions
         dtype: numeric
         doc: Number of turns within a spiral.
-        required: true
       - name: height
         dtype: numeric
         doc: Spiral height of each sweep (in micrometers).
-        required: false
+        quantity: "?"
     attributes:
       - name: description
         dtype: text
@@ -76,13 +73,11 @@ groups:
         doc:
           Estimated lateral spatial profile or point spread function, expressed as
           mean [um] ± s.d [um].
-        required: true
       - name: axial_point_spread_function
         dtype: text
         doc:
           Estimated axial spatial profile or point spread function, expressed as mean
           [um] ± s.d [um].
-        required: true
     attributes:
       - name: description
         dtype: text
@@ -95,12 +90,10 @@ groups:
       - name: effector
         dtype: text
         doc: Light-activated effector protein expressed by the targeted cell (e.g., ChR2).
-        required: true
     links:
       - name: light_source
         target_type: LightSource
         doc: Light source used to apply photostimulation.
-        required: true
       - name: spatial_light_modulator
         target_type: Device
         doc: Spatial light modulator used to generate photostimulation pattern.
@@ -117,7 +110,7 @@ groups:
       - name: spatial_resolution
         dtype: numeric
         doc: Resolution of spatial light modulator (in pixels), formatted as [width, height].
-        required: false
+        quantity: "?"
   - neurodata_type_def: SpatialLightModulator3D
     neurodata_type_inc: Device
     doc: 3D spatial light modulator used in the experiment.
@@ -130,7 +123,7 @@ groups:
       - name: spatial_resolution
         dtype: numeric
         doc: Resolution of spatial light modulator (in pixels), formatted as [width, height, depth].
-        required: false
+        quantity: "?"
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
     doc: Light source used in the experiment.
@@ -138,31 +131,30 @@ groups:
       - name: stimulation_wavelength
         dtype: numeric
         doc: Excitation wavelength of stimulation light (nanometers).
-        required: true
       - name: filter_description
         dtype: text
         doc: Filter used to obtain the excitation wavelength of stimulation light, e.g. 'Short pass at 1040 nm'.
-        required: false
+        quantity: "?"
       - name: peak_power
         dtype: numeric
         doc: Incident power of stimulation device (in Watts).
-        required: false
+        quantity: "?"
       - name: peak_pulse_energy
         dtype: numeric
         doc: If device is pulsed light source, pulse energy (in Joules).
-        required: false
+        quantity: "?"
       - name: intensity
         dtype: numeric
         doc: Intensity of the excitation in W/m^2, if known.
-        required: false
+        quantity: "?"
       - name: exposure_time
         dtype: numeric
         doc: Exposure time of the sample (in sec).
-        required: false
+        quantity: "?"
       - name: pulse_rate
         dtype: numeric
         doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
-        required: false
+        quantity: "?"
     attributes:
       - name: model
         dtype: text
@@ -175,47 +167,40 @@ groups:
       - name: targeted_rois
         neurodata_type_inc: DynamicTableRegion
         doc: A table region referencing a PlaneSegmentation object storing targeted ROIs.
-        required: true
       - name: segmented_rois
         neurodata_type_inc: DynamicTableRegion
         doc: A table region referencing a PlaneSegmentation object storing segmented ROIs that receive photostimulation.
-        required: false
+        quantity: "?"
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
     doc: Table to hold all patterned optogenetic stimulus onsets.
-    quantity: "?"
     datasets:
       - name: power
         neurodata_type_inc: VectorData
         doc: Power (in Watts) applied to each target during patterned photostimulation.
-        required: true
       - name: targets
         neurodata_type_inc: VectorData
         dtype:
           target_type: OptogeneticStimulusTarget
           reftype: object
         doc: Targeted rois for the stimulus onset.
-        required: true
       - name: stimulus_pattern
         neurodata_type_inc: VectorData
         dtype:
           target_type: LabMetaData
           reftype: object
         doc: Link to the stimulus pattern.
-        required: true
       - name: stimulus_site
         neurodata_type_inc: VectorData
         dtype:
           target_type: PatternedOptogeneticStimulusSite
           reftype: object
         doc: Link to the stimulus site.
-        required: true
       - name: frequency
         neurodata_type_inc: VectorData
         doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz).
-        required: false
+        quantity: "?"
       - name: pulse_width
         neurodata_type_inc: VectorData
         doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.
-        required: false
-
+        quantity: "?"
