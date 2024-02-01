@@ -7,6 +7,8 @@ from pynwb.file import LabMetaData, TimeIntervals
 from pynwb.ogen import OptogeneticStimulusSite
 
 namespace = "ndx-patterned-ogen"
+
+
 @register_class("PatternedOptogeneticStimulusSite", namespace)
 class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
     """
@@ -100,6 +102,7 @@ class OptogeneticStimulusTarget(LabMetaData):
         for key, val in args_to_set.items():
             setattr(self, key, val)
 
+
 @register_class("PatternedOptogeneticStimulusTable", namespace)
 class PatternedOptogeneticStimulusTable(TimeIntervals):
     """
@@ -108,33 +111,28 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
 
     __fields__ = ()
     __columns__ = (
-        {"name": "start_time", "description": "Start time of stimulation, in seconds", "required": True},
-        {"name": "stop_time", "description": "Stop time of stimulation, in seconds", "required": True},
+        {"name": "start_time", "description": "Start time of stimulation, in seconds"},
+        {"name": "stop_time", "description": "Stop time of stimulation, in seconds"},
         {
             "name": "power",
-            "description": "Power (in Watts) applied to each target during patterned photostimulation.",
-            "required": True,
+            "description": "Power (in Watts) applied to each target during patterned photostimulation."
         },
         {
             "name": "frequency",
             "description": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz).",
-            "required": False,
         },
         {
             "name": "pulse_width",
             "description": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.",
-            "required": False,
         },
-        {"name": "targets", "description": "Targeted rois for the stimulus onset.", "required": True},
+        {"name": "targets", "description": "Targeted rois for the stimulus onset."},
         {
             "name": "stimulus_pattern",
             "description": "Link to the stimulus pattern.",
-            "required": True,
         },
         {
             "name": "stimulus_site",
             "description": "Link to the stimulus site.",
-            "required": True,
         },
     )
 
@@ -168,19 +166,6 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             "name": "power",
             "doc": "Power (in Watts) applied to each target during patterned photostimulation.",
             "type": (int, float, Iterable),
-            "default": 0.0,
-        },
-        {
-            "name": "frequency",
-            "doc": "Frequency of stimulation if the stimulus delivered is pulsed (in Hz).",
-            "type": (int, float, Iterable),
-            "default": 0.0,
-        },
-        {
-            "name": "pulse_width",
-            "doc": "Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.",
-            "type": (int, float, Iterable),
-            "default": 0.0,
         },
         {
             "name": "targets",

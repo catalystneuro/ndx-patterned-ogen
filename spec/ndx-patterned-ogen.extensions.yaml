@@ -261,7 +261,7 @@ groups:
     datasets:
       - name: power
         neurodata_type_inc: VectorData
-        doc: Power (in Watts) applied to each target during patterned photostimulation.
+        doc: Power applied to each target during patterned photostimulation, in W.
         attributes:
         - name: unit
           value: Watts
@@ -287,11 +287,11 @@ groups:
         doc: Link to the stimulus site.
       - name: frequency
         neurodata_type_inc: VectorData
-        doc: Frequency of stimulation if the stimulus delivered is pulsed (in Hz).
+        doc: Frequency of stimulation if the stimulus delivered is pulsed, in Hz.
         quantity: "?"
         attributes:
         - name: unit
-          value: Hz
+          value: Hertz
           doc: unit of measure of frequency which is fixed to Hertz
           dtype: text
       - name: pulse_width
