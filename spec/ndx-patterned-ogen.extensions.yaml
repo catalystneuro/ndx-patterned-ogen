@@ -24,7 +24,7 @@ groups:
         attributes:
         - name: unit
           value: micrometers
-          doc: unit of measure of the scanning sweep pattern size, fixed to micrometers
+          doc: Unit of measure of the scanning sweep pattern size, fixed to micrometers.
           dtype: text
       - name: sweep_mask
         dtype: numeric
@@ -64,7 +64,7 @@ groups:
         attributes:
         - name: unit
           value: micrometers
-          doc: unit of measure of the scanning sweep pattern size, fixed to micrometers
+          doc: Unit of measure of the scanning sweep pattern size, fixed to micrometers.
           dtype: text
       - name: sweep_mask
         dtype: numeric
@@ -91,7 +91,7 @@ groups:
         attributes:
         - name: unit
           value: micrometers
-          doc: unit of measure of the spiral diameter, fixed to micrometers
+          doc: Unit of measure of the spiral diameter, fixed to micrometers.
           dtype: text
       - name: number_of_revolutions
         dtype: numeric
@@ -103,7 +103,7 @@ groups:
         attributes:
         - name: unit
           value: micrometers
-          doc: unit of measure of the spiral height, fixed to micrometers
+          doc: Unit of measure of the spiral height, fixed to micrometers.
           dtype: text
     attributes:
       - name: description
@@ -188,7 +188,7 @@ groups:
         attributes:
         - name: unit
           value: nanometers
-          doc: unit of measure of wavelength which is fixed to nanometers
+          doc: Unit of measure of wavelength, fixed to nanometers.
           dtype: text
       - name: filter_description
         dtype: text
@@ -201,7 +201,7 @@ groups:
         attributes:
         - name: unit
           value: Watts
-          doc: unit of measure of power which is fixed to Watts
+          doc: Unit of measure of power, fixed to Watts.
           dtype: text
       - name: peak_pulse_energy
         dtype: numeric
@@ -209,7 +209,7 @@ groups:
         attributes:
         - name: unit
           value: Joules
-          doc: unit of measure of energy which is fixed to Joules
+          doc: Unit of measure of energy, fixed to Joules.
           dtype: text
         quantity: "?"
       - name: intensity
@@ -219,7 +219,7 @@ groups:
         attributes:
         - name: unit
           value: W/m^2
-          doc: unit of measure of intensity which is fixed to Watts per square meters
+          doc: Unit of measure of intensity, fixed to Watts per square meters.
           dtype: text        
       - name: exposure_time
         dtype: numeric
@@ -228,7 +228,7 @@ groups:
         attributes:
         - name: unit
           value: seconds
-          doc: unit of measure of exposure time which is fixed to seconds
+          doc: Unit of measure of exposure time, fixed to seconds.
           dtype: text   
       - name: pulse_rate
         dtype: numeric
@@ -237,7 +237,7 @@ groups:
         attributes:
         - name: unit
           value: Hz
-          doc: unit of measure of rate which is fixed to Hertz
+          doc: Unit of measure of rate, fixed to Hertz.
           dtype: text   
     attributes:
       - name: model
@@ -265,7 +265,7 @@ groups:
         attributes:
         - name: unit
           value: Watts
-          doc: unit of measure of power which is fixed to Watts
+          doc: Unit of measure of power, fixed to Watts.
           dtype: text
       - name: targets
         neurodata_type_inc: VectorData
@@ -292,7 +292,7 @@ groups:
         attributes:
         - name: unit
           value: Hertz
-          doc: unit of measure of frequency which is fixed to Hertz
+          doc: Unit of measure of frequency, fixed to Hertz.
           dtype: text
       - name: pulse_width
         neurodata_type_inc: VectorData
@@ -301,5 +301,5 @@ groups:
         attributes:
         - name: unit
           value: seconds/phase
-          doc: unit of measure of power which is fixed to seconds/phase
+          doc: Unit of measure of power, fixed to seconds per phase.
           dtype: text
