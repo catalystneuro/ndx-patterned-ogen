@@ -166,7 +166,7 @@ class TestPatternedOgenConstructor(TestCase):
         # Assert that the error message matches the expected one
         expected_error_message = (
             f"'power_per_roi' has {len(per_rois)} elements but it must have"
-            f" {targets_s.targeted_rois.shape[0]} elements as 'targeted_roi'."
+            f" {targets_s.targeted_rois.shape[0]} elements to match the length of 'targeted_rois'."
         )
         self.assertEqual(str(context.exception), expected_error_message)
 
@@ -337,7 +337,7 @@ class TestPatternedOgenConstructor(TestCase):
         # Assert that the error message matches the expected one
         expected_error_message = (
             f"'power_per_roi' has {targets.targeted_rois.shape[0]+2} elements but it must have"
-            f" {targets.targeted_rois.shape[0]} elements as 'targeted_roi'."
+            f" {targets.targeted_rois.shape[0]} elements to match the length of 'targeted_rois'."
         )
         self.assertEqual(str(context.exception), expected_error_message)
 
