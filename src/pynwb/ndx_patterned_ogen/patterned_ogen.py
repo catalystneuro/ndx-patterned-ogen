@@ -531,7 +531,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             # First check: power_per_roi and power must not be defined in the same time
             if "power_per_roi" in colset.keys() and "power" in colset.keys():
                 raise ValueError(
-                    "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined"
+                    "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined."
                 )
 
             # Second check: all elements in "power", "frequency", "pulse_width" must be scalars
@@ -660,8 +660,8 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
 
         if kwargs["power_per_roi"] is None and kwargs["power"] is None:
             raise ValueError(
-                "Neither 'power' nor 'power_per_roi' have been defined. At least one of the two must be defined"
+                "Neither 'power' nor 'power_per_roi' have been defined. At least one of the two must be defined."
             )
 
         if kwargs["power_per_roi"] is not None and kwargs["power"] is not None:
-            raise ValueError("Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined")
+            raise ValueError("Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined.")

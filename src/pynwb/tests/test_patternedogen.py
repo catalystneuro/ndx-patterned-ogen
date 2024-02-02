@@ -207,7 +207,7 @@ class TestPatternedOgenConstructor(TestCase):
             )
 
         # Assert that the error message matches the expected one
-        expected_error_message = "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined"
+        expected_error_message = "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined."
         self.assertEqual(str(context.exception), expected_error_message)
 
     def test_constructor_add_interval(self):
@@ -371,7 +371,7 @@ class TestPatternedOgenConstructor(TestCase):
             stimulus_table.add_interval(**interval_parameter)
 
         # Assert that the error message matches the expected one
-        expected_error_message = "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined"
+        expected_error_message = "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined."
         self.assertEqual(str(context.exception), expected_error_message)
 
     def test_constructor_add_interval_power_and_power_per_roi_both_not_defined_fail(self):
@@ -401,7 +401,7 @@ class TestPatternedOgenConstructor(TestCase):
 
         # Assert that the error message matches the expected one
         expected_error_message = (
-            "Neither 'power' nor 'power_per_roi' have been defined. At least one of the two must be defined"
+            "Neither 'power' nor 'power_per_roi' have been defined. At least one of the two must be defined."
         )
         self.assertEqual(str(context.exception), expected_error_message)
 
