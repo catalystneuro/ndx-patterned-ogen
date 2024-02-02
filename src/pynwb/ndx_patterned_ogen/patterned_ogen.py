@@ -485,14 +485,14 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
     )
 
     @classmethod
-    def check_if_argument_is_list(cls, colset, field_name):
+    def check_if_argument_is_not_scalar(cls, colset, field_name):
         for row in range(len(colset[field_name])):
-            if isinstance(colset[field_name][row], (list, np.ndarray, tuple)):
+            if not isinstance(colset[field_name][row], (int, float, np.generic)):
                 raise ValueError(
                     f"{field_name} should be defined as scalar. Use '{field_name}_per_roi' to store photostimulation"
-                    " at different powers, for each rois in target."
+                    f" at different {field_name}, for each rois in target."
                 )
-
+            
     @classmethod
     def check_length_rois_properties(cls, colset, field_name):
         for row in range(len(colset[field_name])):
@@ -539,7 +539,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             # Second check: all elements in "power", "frequency", "pulse_width" must be scalars
             for column_to_check in ["power", "frequency", "pulse_width"]:
                 if column_to_check in colset.keys():
-                    self.check_if_argument_is_list(colset=colset, field_name=column_to_check)
+                    self.check_if_argument_is_not_scalar(colset=colset, field_name=column_to_check)
 
             # Third check: all elements in "power_per_roi", "frequency_per_roi", "pulse_width_per_roi" columns
             # must be the same length as the respective targets
@@ -617,18 +617,18 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         """
         super(PatternedOptogeneticStimulusTable, self).add_interval(**kwargs)
 
-        if isinstance(kwargs["power"], (list, np.ndarray, tuple)):
+        if kwargs["power"] is not None and not isinstance(kwargs["power"], (int, float, np.generic)):
             raise ValueError(
                 "'power' should be defined as scalar. Use 'power_per_roi' to store photostimulation at different"
-                " powers, for each rois in target."
+                " power, for each rois in target."
             )
-        if isinstance(kwargs["frequency"], (list, np.ndarray, tuple)):
+        if kwargs["frequency"] is not None and not isinstance(kwargs["frequency"], (int, float, np.generic)):
             raise ValueError(
                 "'frequency' should be defined as scalar. Use 'frequency_per_roi' to store photostimulation at"
                 " different frequency, for each rois in target."
             )
 
-        if isinstance(kwargs["pulse_width"], (list, np.ndarray, tuple)):
+        if kwargs["pulse_width"] is not None and not isinstance(kwargs["pulse_width"], (int, float, np.generic)):
             raise ValueError(
                 "'pulse_width' should be defined as scalar. Use 'pulse_width_per_roi' to store photostimulation with"
                 " different pulse width, for each rois in target."
