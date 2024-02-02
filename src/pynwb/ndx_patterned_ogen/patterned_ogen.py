@@ -455,17 +455,17 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             "required": False,
         },
         {
-            "name": "power_per_rois",
+            "name": "power_per_roi",
             "description": "Power (in Watts) defined as an array. Each power value refers to each roi in target.",
             "required": False,
         },
         {
-            "name": "frequency_per_rois",
+            "name": "frequency_per_roi",
             "description": "Frequency (in Hz) defined as an array. Each frequency value refers to each roi in target.",
             "required": False,
         },
         {
-            "name": "pulse_width_per_rois",
+            "name": "pulse_width_per_roi",
             "description": (
                 "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target."
             ),
@@ -489,7 +489,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         for row in range(len(colset[field_name])):
             if isinstance(colset[field_name][row], (list, np.ndarray, tuple)):
                 raise ValueError(
-                    f"{field_name} should be defined as scalar. Use '{field_name}_per_rois' to store photostimulation"
+                    f"{field_name} should be defined as scalar. Use '{field_name}_per_roi' to store photostimulation"
                     " at different powers, for each rois in target."
                 )
 
@@ -528,10 +528,10 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         columns = popargs("columns", kwargs)
         if columns is not None:
             colset = {c.name: c for c in columns}
-            # First check: power_per_rois and power must not be defined in the same time
-            if "power_per_rois" in colset.keys() and "power" in colset.keys():
+            # First check: power_per_roi and power must not be defined in the same time
+            if "power_per_roi" in colset.keys() and "power" in colset.keys():
                 raise ValueError(
-                    "Both 'power' and 'power_per_rois' have been defined. Only one of them must be defined"
+                    "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined"
                 )
 
             # Second check: all elements in "power", "frequency", "pulse_width" must be scalars
@@ -539,9 +539,9 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
                 if column_to_check in colset.keys():
                     self.check_if_argument_is_list(colset=colset, field_name=column_to_check)
 
-            # Third check: all elements in "power_per_rois", "frequency_per_rois", "pulse_width_per_rois" columns
+            # Third check: all elements in "power_per_roi", "frequency_per_roi", "pulse_width_per_roi" columns
             # must be the same length as the respective targets
-            for column_to_check in ["power_per_rois", "frequency_per_rois", "pulse_width_per_rois"]:
+            for column_to_check in ["power_per_roi", "frequency_per_roi", "pulse_width_per_roi"]:
                 if column_to_check in colset.keys():
                     self.check_length_rois_properties(colset=colset, field_name=column_to_check)
 
@@ -573,19 +573,19 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             "default": None,
         },
         {
-            "name": "power_per_rois",
+            "name": "power_per_roi",
             "doc": "Power (in Watts) defined as an array. Each power value refers to each roi in target.",
             "type": (int, float, Iterable),
             "default": None,
         },
         {
-            "name": "frequency_per_rois",
+            "name": "frequency_per_roi",
             "doc": "Frequency (in Hz) defined as an array. Each frequency value refers to each roi in target.",
             "type": (int, float, Iterable),
             "default": None,
         },
         {
-            "name": "pulse_width_per_rois",
+            "name": "pulse_width_per_roi",
             "doc": (
                 "Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target."
             ),
@@ -617,51 +617,51 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
 
         if isinstance(kwargs["power"], (list, np.ndarray, tuple)):
             raise ValueError(
-                "'power' should be defined as scalar. Use 'power_per_rois' to store photostimulation at different"
+                "'power' should be defined as scalar. Use 'power_per_roi' to store photostimulation at different"
                 " powers, for each rois in target."
             )
         if isinstance(kwargs["frequency"], (list, np.ndarray, tuple)):
             raise ValueError(
-                "'frequency' should be defined as scalar. Use 'frequency_per_rois' to store photostimulation at"
+                "'frequency' should be defined as scalar. Use 'frequency_per_roi' to store photostimulation at"
                 " different frequency, for each rois in target."
             )
 
         if isinstance(kwargs["pulse_width"], (list, np.ndarray, tuple)):
             raise ValueError(
-                "'pulse_width' should be defined as scalar. Use 'pulse_width_per_rois' to store photostimulation with"
+                "'pulse_width' should be defined as scalar. Use 'pulse_width_per_roi' to store photostimulation with"
                 " different pulse width, for each rois in target."
             )
 
         n_targets = len(kwargs["targets"].targeted_rois[:])
 
-        if kwargs["power_per_rois"] is not None:
-            n_elements = len(kwargs["power_per_rois"])
+        if kwargs["power_per_roi"] is not None:
+            n_elements = len(kwargs["power_per_roi"])
             if n_elements != n_targets:
                 raise ValueError(
-                    f"'power_per_rois' has {n_elements} elements but it must have"
+                    f"'power_per_roi' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
 
-        if kwargs["frequency_per_rois"] is not None:
-            n_elements = len(kwargs["frequency_per_rois"])
+        if kwargs["frequency_per_roi"] is not None:
+            n_elements = len(kwargs["frequency_per_roi"])
             if n_elements != n_targets:
                 raise ValueError(
-                    f"'frequency_per_rois' has {n_elements} elements but it must have"
+                    f"'frequency_per_roi' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
 
-        if kwargs["pulse_width_per_rois"] is not None:
-            n_elements = len(kwargs["pulse_width_per_rois"])
+        if kwargs["pulse_width_per_roi"] is not None:
+            n_elements = len(kwargs["pulse_width_per_roi"])
             if n_elements != n_targets:
                 raise ValueError(
-                    f"'pulse_width_per_rois' has {n_elements} elements but it must have"
+                    f"'pulse_width_per_roi' has {n_elements} elements but it must have"
                     f" {n_targets} elements as 'targeted_roi'."
                 )
 
-        if kwargs["power_per_rois"] is None and kwargs["power"] is None:
+        if kwargs["power_per_roi"] is None and kwargs["power"] is None:
             raise ValueError(
-                "Neither 'power' nor 'power_per_rois' have been defined. At least one of the two must be defined"
+                "Neither 'power' nor 'power_per_roi' have been defined. At least one of the two must be defined"
             )
 
-        if kwargs["power_per_rois"] is not None and kwargs["power"] is not None:
-            raise ValueError("Both 'power' and 'power_per_rois' have been defined. Only one of them must be defined")
+        if kwargs["power_per_roi"] is not None and kwargs["power"] is not None:
+            raise ValueError("Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined")
