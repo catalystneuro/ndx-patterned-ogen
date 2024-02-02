@@ -29,7 +29,7 @@ class TestPatternedOgenConstructor(TestCase):
         self.nwbfile = set_up_nwbfile()
 
     def test_constructor(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected, 
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected,
         when 'columns' is passed as argument."""
 
         start_time = VectorData(name="start_time", description="start time", data=[0.0, 0.0, 0.0])
@@ -63,7 +63,7 @@ class TestPatternedOgenConstructor(TestCase):
         np.testing.assert_array_equal(stimulus_table.stop_time[:], stop_time)
 
     def test_constructor_power_as_array_fail(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining 
+        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining
         an element of 'power' as a list, when 'columns' is passed as argument."""
 
         start_time = VectorData(name="start_time", description="start time", data=[0.0, 0.0, 0.0])
@@ -93,7 +93,7 @@ class TestPatternedOgenConstructor(TestCase):
             )
 
     def test_constructor_power_per_roi(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected, 
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected,
         when 'columns' is passed as argument."""
 
         start_time = VectorData(name="start_time", description="start time", data=[0.0, 0.0, 0.0])
@@ -129,8 +129,8 @@ class TestPatternedOgenConstructor(TestCase):
         np.testing.assert_array_equal(stimulus_table.power_per_roi[:], power_per_roi)
 
     def test_constructor_power_per_roi_fail_for_mismatch_dim(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining 
-        the elements of 'power_per_roi' with a different length with respect to 'targets', 
+        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining
+        the elements of 'power_per_roi' with a different length with respect to 'targets',
         when 'columns' is passed as argument."""
 
         start_time = VectorData(name="start_time", description="start time", data=[0.0, 0.0, 0.0])
@@ -171,7 +171,7 @@ class TestPatternedOgenConstructor(TestCase):
         self.assertEqual(str(context.exception), expected_error_message)
 
     def test_constructor_power_and_power_per_roi_both_defined_fail(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining 
+        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining
         both 'power_per_roi' and 'power', when 'columns' is passed as argument."""
 
         start_time = VectorData(name="start_time", description="start time", data=[0.0, 0.0, 0.0])
@@ -211,7 +211,7 @@ class TestPatternedOgenConstructor(TestCase):
         self.assertEqual(str(context.exception), expected_error_message)
 
     def test_constructor_add_interval(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected, 
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected,
         using add_interval() function."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -242,7 +242,7 @@ class TestPatternedOgenConstructor(TestCase):
         np.testing.assert_array_equal(stimulus_table.stop_time[:], [stop_time])
 
     def test_constructor_add_interval_power_as_array_fail(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining 
+        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining
         an element of 'power' as a list, using add_interval() function."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -269,7 +269,7 @@ class TestPatternedOgenConstructor(TestCase):
             stimulus_table.add_interval(**interval_parameter)
 
     def test_constructor_add_interval_power_per_roi(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected, 
+        """Test that the constructor for PatternedOptogeneticStimulusTable sets values as expected,
         using add_interval() function."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -342,7 +342,7 @@ class TestPatternedOgenConstructor(TestCase):
         self.assertEqual(str(context.exception), expected_error_message)
 
     def test_constructor_add_interval_power_and_power_per_roi_both_defined_fail(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining 
+        """Test that the constructor for PatternedOptogeneticStimulusTable fails when defining
         both 'power_per_roi' and 'power', using add_interval() function."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(
@@ -375,7 +375,7 @@ class TestPatternedOgenConstructor(TestCase):
         self.assertEqual(str(context.exception), expected_error_message)
 
     def test_constructor_add_interval_power_and_power_per_roi_both_not_defined_fail(self):
-        """Test that the constructor for PatternedOptogeneticStimulusTable fails when not defining 
+        """Test that the constructor for PatternedOptogeneticStimulusTable fails when not defining
         'power_per_roi' or 'power', using add_interval() function."""
 
         stimulus_table = PatternedOptogeneticStimulusTable(

@@ -500,7 +500,8 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             n_elements = len(colset[field_name][row])
             if n_elements != n_targets:
                 raise ValueError(
-                    f"'{field_name}' has {n_elements} elements but it must have {n_targets} elements to match the length of 'targeted_rois'."
+                    f"'{field_name}' has {n_elements} elements but it must have {n_targets} elements to match the"
+                    " length of 'targeted_rois'."
                 )
 
     @docval(
