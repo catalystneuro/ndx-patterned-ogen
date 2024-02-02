@@ -639,7 +639,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
             if n_elements != n_targets:
                 raise ValueError(
                     f"'power_per_roi' has {n_elements} elements but it must have"
-                    f" {n_targets} elements as 'targeted_roi'."
+                    f" {n_targets} elements to match the length of 'targeted_rois'."
                 )
 
         if kwargs["frequency_per_roi"] is not None:
