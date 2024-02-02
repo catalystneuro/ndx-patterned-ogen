@@ -529,10 +529,11 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
         if columns is not None:
             colset = {c.name: c for c in columns}
             # First check: power_per_roi and power must not be defined in the same time
-            if "power_per_roi" in colset.keys() and "power" in colset.keys():
-                raise ValueError(
-                    "Both 'power' and 'power_per_roi' have been defined. Only one of them must be defined."
-                )
+            for colname in colset.keys():
+                if colname in colset.keys() and f"{colname}_per_roi" in colset.keys():
+                    raise ValueError(
+                        f"Both '{colname}' and '{colname}_per_roi' have been defined. Only one of them must be defined."
+                    )
 
             # Second check: all elements in "power", "frequency", "pulse_width" must be scalars
             for column_to_check in ["power", "frequency", "pulse_width"]:
