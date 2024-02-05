@@ -261,7 +261,17 @@ groups:
     datasets:
       - name: power
         neurodata_type_inc: VectorData
-        doc: Power applied to each target during patterned photostimulation, in W.
+        doc: Power (in Watts) defined as a scalar. All rois in target receive the same photostimulation power.
+        quantity: "?"
+        attributes:
+        - name: unit
+          value: Watts
+          doc: Unit of measure of power, fixed to Watts.
+          dtype: text
+      - name: power_per_roi
+        neurodata_type_inc: VectorData
+        doc: Power (in Watts) defined as an array. Each power value refers to each roi in target.
+        quantity: "?"
         attributes:
         - name: unit
           value: Watts
@@ -287,16 +297,34 @@ groups:
         doc: Link to the stimulus site.
       - name: frequency
         neurodata_type_inc: VectorData
-        doc: Frequency of stimulation if the stimulus delivered is pulsed, in Hz.
+        doc: Frequency (in Hz) defined as a scalar. All rois in target receive the photostimulation at the same frequency.
         quantity: "?"
         attributes:
         - name: unit
           value: Hertz
           doc: Unit of measure of frequency, fixed to Hertz.
-          dtype: text
+          dtype: text        
+      - name: frequency_per_roi
+        neurodata_type_inc: VectorData
+        doc: Frequency (in Hz) defined as an array. Each frequency value refers to each roi in target.
+        quantity: "?"
+        attributes:
+        - name: unit
+          value: Hertz
+          doc: Unit of measure of frequency, fixed to Hertz.
+          dtype: text      
       - name: pulse_width
         neurodata_type_inc: VectorData
-        doc: Pulse width of stimulation if the stimulus delivered is pulsed, in seconds/phase.
+        doc: Pulse Width (in sec/phase) defined as a scalar. All rois in target receive the photostimulation with the same pulse width.
+        quantity: "?"
+        attributes:
+        - name: unit
+          value: seconds/phase
+          doc: Unit of measure of power, fixed to seconds per phase.
+          dtype: text        
+      - name: pulse_width_per_roi
+        neurodata_type_inc: VectorData
+        doc: Pulse Width (in sec/phase) defined as an array. Each pulse width value refers to each roi in target.
         quantity: "?"
         attributes:
         - name: unit
