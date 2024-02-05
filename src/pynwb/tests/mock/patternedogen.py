@@ -26,7 +26,7 @@ from ndx_patterned_ogen import (
 def mock_OptogeneticStimulus2DPattern(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus 2D pattern",
-    sweep_size: list = [5],  # um
+    sweep_size_in_um: list = [5],  # um
     sweep_mask=np.zeros((10, 10)),
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulus2DPattern:
@@ -34,7 +34,7 @@ def mock_OptogeneticStimulus2DPattern(
         name=name or name_generator("OptogeneticStimulus2DPattern"),
         description=description,
         sweep_mask=sweep_mask,
-        sweep_size=sweep_size,
+        sweep_size_in_um=sweep_size_in_um,
     )
     nwbfile.add_lab_meta_data(stimulus_pattern)
     return stimulus_pattern
@@ -43,7 +43,7 @@ def mock_OptogeneticStimulus2DPattern(
 def mock_OptogeneticStimulus3DPattern(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus 3D pattern",
-    sweep_size: list = [5],  # um
+    sweep_size_in_um: list = [5],  # um
     sweep_mask=np.zeros((10, 10, 2)),
     nwbfile: Optional[NWBFile] = None,
 ) -> OptogeneticStimulus3DPattern:
@@ -51,7 +51,7 @@ def mock_OptogeneticStimulus3DPattern(
         name=name or name_generator("OptogeneticStimulus3DPattern"),
         description=description,
         sweep_mask=sweep_mask,
-        sweep_size=sweep_size,
+        sweep_size_in_um=sweep_size_in_um,
     )
     nwbfile.add_lab_meta_data(stimulus_pattern)
     return stimulus_pattern
@@ -60,15 +60,15 @@ def mock_OptogeneticStimulus3DPattern(
 def mock_TemporalFocusing(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus pattern",
-    lateral_point_spread_function: str = "9e-6 m ± 0.7e-6 m",
-    axial_point_spread_function: str = "32e-6 m ± 1.6e-6 m",
+    lateral_point_spread_function_in_um: str = "9e-6 m ± 0.7e-6 m",
+    axial_point_spread_function_in_um: str = "32e-6 m ± 1.6e-6 m",
     nwbfile: Optional[NWBFile] = None,
 ) -> TemporalFocusing:
     stimulus_pattern_temporal_focusing = TemporalFocusing(
         name=name or name_generator("TemporalFocusing"),
         description=description,
-        lateral_point_spread_function=lateral_point_spread_function,
-        axial_point_spread_function=axial_point_spread_function,
+        lateral_point_spread_function_in_um=lateral_point_spread_function_in_um,
+        axial_point_spread_function_in_um=axial_point_spread_function_in_um,
     )
     nwbfile.add_lab_meta_data(stimulus_pattern_temporal_focusing)
     return stimulus_pattern_temporal_focusing
@@ -77,16 +77,16 @@ def mock_TemporalFocusing(
 def mock_SpiralScanning(
     name: Optional[str] = None,
     description: str = "Generic description for optogenetic stimulus pattern",
-    diameter: float = 15e-6,  # diameter of a single spiral
-    height: float = 10e-6,  # height of a single spira (if 3D pattern)
+    diameter_in_um: float = 15e-6,  # diameter_in_um of a single spiral
+    height_in_um: float = 10e-6,  # height_in_um of a single spira (if 3D pattern)
     number_of_revolutions: float = 5,  # number of revolution of a single spira
     nwbfile: Optional[NWBFile] = None,
 ) -> SpiralScanning:
     stimulus_pattern_spiral_scanning = SpiralScanning(
         name=name or name_generator("SpiralScanning"),
         description=description,
-        diameter=diameter,
-        height=height,
+        diameter_in_um=diameter_in_um,
+        height_in_um=height_in_um,
         number_of_revolutions=number_of_revolutions,
     )
     nwbfile.add_lab_meta_data(stimulus_pattern_spiral_scanning)
@@ -97,28 +97,28 @@ def mock_LightSource(
     name: Optional[str] = None,
     manufacturer: Optional[str] = None,
     model: Optional[str] = "laser model",
-    stimulation_wavelength: float = 1035.0,  # nm
+    stimulation_wavelength_in_nm: float = 1035.0,  # nm
     description: str = "Generic description for the laser",
-    peak_power: float = 0.70,  # the peak power of stimulation in Watts
+    peak_power_in_W: float = 0.70,  # the peak power of stimulation in Watts
     filter_description: str = "Short pass at 1040 nm",
-    peak_pulse_energy: float = 0.70,
-    intensity: float = 0.005,  # the intensity of excitation in W/mm^2
-    exposure_time: float = 2.51e-13,  # the exposure time of the sample in seconds
-    pulse_rate: float = 2.0e6,  # the pulse rate of the laser is in Hz
+    peak_pulse_energy_in_J: float = 0.70,
+    intensity_in_W_per_m2: float = 0.005,  # the intensity of excitation in W/mm^2
+    exposure_time_in_s: float = 2.51e-13,  # the exposure time of the sample in seconds
+    pulse_rate_in_Hz: float = 2.0e6,  # the pulse rate of the laser is in Hz
     nwbfile: Optional[NWBFile] = None,
 ) -> LightSource:
     light_source = LightSource(
         name=name or name_generator("LightSource"),
         manufacturer=manufacturer,
         model=model,
-        stimulation_wavelength=stimulation_wavelength,
+        stimulation_wavelength_in_nm=stimulation_wavelength_in_nm,
         filter_description=filter_description,
         description=description,
-        peak_pulse_energy=peak_pulse_energy,
-        peak_power=peak_power,
-        intensity=intensity,
-        exposure_time=exposure_time,
-        pulse_rate=pulse_rate,
+        peak_pulse_energy_in_J=peak_pulse_energy_in_J,
+        peak_power_in_W=peak_power_in_W,
+        intensity_in_W_per_m2=intensity_in_W_per_m2,
+        exposure_time_in_s=exposure_time_in_s,
+        pulse_rate_in_Hz=pulse_rate_in_Hz,
     )
     nwbfile.add_device(light_source)
     return light_source
@@ -129,7 +129,7 @@ def mock_SpatialLightModulator2D(
     description: str = "Generic description for the spatial light modulator device",
     model: str = "Generic model for the spatial light modulator device",
     manufacturer: Optional[str] = None,
-    spatial_resolution: list = [100, 100],
+    spatial_resolution_in_px: list = [100, 100],
     nwbfile: Optional[NWBFile] = None,
 ) -> SpatialLightModulator2D:
     spatial_light_modulator = SpatialLightModulator2D(
@@ -137,7 +137,7 @@ def mock_SpatialLightModulator2D(
         description=description,
         model=model,
         manufacturer=manufacturer,
-        spatial_resolution=spatial_resolution,
+        spatial_resolution_in_px=spatial_resolution_in_px,
     )
     nwbfile.add_device(spatial_light_modulator)
     return spatial_light_modulator
@@ -148,7 +148,7 @@ def mock_SpatialLightModulator3D(
     description: str = "Generic description for the spatial light modulator device",
     model: str = "Generic model for the spatial light modulator device",
     manufacturer: Optional[str] = None,
-    spatial_resolution: list = [100, 100, 100],
+    spatial_resolution_in_px: list = [100, 100, 100],
     nwbfile: Optional[NWBFile] = None,
 ) -> SpatialLightModulator3D:
     spatial_light_modulator = SpatialLightModulator3D(
@@ -156,7 +156,7 @@ def mock_SpatialLightModulator3D(
         description=description,
         model=model,
         manufacturer=manufacturer,
-        spatial_resolution=spatial_resolution,
+        spatial_resolution_in_px=spatial_resolution_in_px,
     )
     nwbfile.add_device(spatial_light_modulator)
     return spatial_light_modulator
@@ -225,9 +225,9 @@ def mock_PatternedOptogeneticStimulusTable(
     description: str = "no description",
     start_time: list = [0.0, 0.1, 0.2],
     stop_time: list = [0.7, 0.8, 0.9],
-    power: list = [700.0, 800.0, 900.0],
-    frequency: list = [7.0, 8.0, 9.0],
-    pulse_width: list = [0.1, 0.1, 0.1],
+    power: list = [0.7, 0.8, 0.9],
+    frequency: list = [20.0, 10.0, 5.0],
+    pulse_width: list = [0.01, 0.02, 0.05],
     stimulus_pattern: list = [None, None, None],
     targets: list = [None, None, None],
     stimulus_site: list = [None, None, None],

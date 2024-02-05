@@ -40,13 +40,11 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
         for key, val in args_to_set.items():
             setattr(self, key, val)
 
-    @docval(
-        {
-            "name": "spatial_light_modulator",
-            "type": Device,
-            "doc": "Spatial light modulator used to generate photostimulation pattern. ",
-        }
-    )
+    @docval({
+        "name": "spatial_light_modulator",
+        "type": Device,
+        "doc": "Spatial light modulator used to generate photostimulation pattern. ",
+    })
     def add_spatial_light_modulator(self, spatial_light_modulator):
         """
         Add a spatial light modulator to the photostimulation method.
@@ -173,7 +171,7 @@ class PatternedOptogeneticStimulusTable(TimeIntervals):
                     f"{field_name} should be defined as scalar. Use '{field_name}_per_roi' to store photostimulation"
                     f" at different {field_name}, for each rois in target."
                 )
-            
+
     @classmethod
     def check_length_rois_properties(cls, colset, field_name):
         for row in range(len(colset[field_name])):
