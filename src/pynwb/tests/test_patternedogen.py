@@ -1,5 +1,4 @@
-"""Unit and integration tests for the PatternedOptogeneticStimulusTable extension neurodata type.
-"""
+"""Unit and integration tests for the PatternedOptogeneticStimulusTable extension neurodata type."""
 
 import numpy as np
 from hdmf.common.table import VectorData
