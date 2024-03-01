@@ -14,7 +14,7 @@ This is a <a href="https://www.nwb.org/">NeuroData Without Borders (NWB)</a> ext
     * `SpiralScanning` stores parameters associated with the spiral scanning pattern.
 * `OptogeneticStimulusTarget` container stored a subset of targeted ROIs `targeted_rois`, that is a `DynamicTableRegion` referencing the rows of a `PlaneSegmentation`. Optionally, we can store the corresponding segmented ROIs that have been successfully photostimulated. `segmented_rois` is also a `DynamicTableRegion` referencing the rows of a `PlaneSegmentation`. Since not all targeted ROIs may result in an actual photostimulation a `global_roi_ids` column should be added to both `PlaneSegmentation` object to express the correspondence between the targeted and segmented ROIs.
 * `PhotostimulationTable` is an `TimeIntervals` table. Each row stores a stimulus onset - defined by `start`, `stop`, `power` (optionally `frequency` and `pulse_width`). Each stimulus onset reference a specific `OptogeneticStimulusTarget` and `PhotostimulationPattern`
-NB: `power`(`frequency` and `pulse_width`) can be defined either as scalar and as 1D array. If defined as scalar, it is assumed that all the ROIs in `targets` receive the same stimulus `power`(`frequency` and `pulse_width`). If defined as 1D array, the length must equal to the number of ROIs in targets, so we can define different `power`,`frequency` and `pulse_width` for each targeted ROI.
+NB: When `power`(`frequency` and `pulse_width`) is defined, its value apply to all the ROIs in `targets`. When `power_per_roi`(`frequency_per_roi` and `pulse_width_per_roi`) id defined, the length must equal to the number of ROIs in targets, and each element refers to a specific targeted ROI.
 
 ## Background
 
