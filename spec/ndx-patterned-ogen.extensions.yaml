@@ -162,7 +162,7 @@ groups:
           
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
-    doc: Light source used to illuminate an imaging space.
+    doc: Light source used in the experiment.
     attributes:
       - name: model
         dtype: text
