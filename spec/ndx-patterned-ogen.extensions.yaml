@@ -130,7 +130,7 @@ groups:
       - name: spatial_light_modulator
         target_type: Device
         doc: Spatial light modulator used to generate photostimulation pattern.
-        required: false
+        quantity: "?"
 
 
   - neurodata_type_def: SpatialLightModulator2D
