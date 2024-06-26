@@ -1,4 +1,5 @@
 groups:
+
   - neurodata_type_def: OptogeneticStimulus2DPattern
     neurodata_type_inc: LabMetaData
     doc: Container to store the information about a generic 2D stimulus pattern (spatial information).
@@ -34,6 +35,8 @@ groups:
         shape:
           -
           -
+
+
   - neurodata_type_def: OptogeneticStimulus3DPattern
     neurodata_type_inc: LabMetaData
     doc: Container to store the information about a generic 3D stimulus pattern (spatial information).
@@ -71,6 +74,8 @@ groups:
           -
           -
           -
+
+
   - neurodata_type_def: SpiralScanning
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a spiral scanning pattern.
@@ -89,6 +94,8 @@ groups:
         dtype: text
         doc: Describe any additional details about the pattern.
         required: false
+
+
   - neurodata_type_def: TemporalFocusing
     neurodata_type_inc: LabMetaData
     doc: Container to store the parameters defining a temporal focusing beam-shaping.
@@ -107,6 +114,8 @@ groups:
         dtype: text
         doc: Describe any additional details about the pattern.
         required: false
+
+
   - neurodata_type_def: PatternedOptogeneticStimulusSite
     neurodata_type_inc: OptogeneticStimulusSite
     doc: Patterned optogenetic stimulus site.
@@ -122,6 +131,8 @@ groups:
         target_type: Device
         doc: Spatial light modulator used to generate photostimulation pattern.
         required: false
+
+
   - neurodata_type_def: SpatialLightModulator2D
     neurodata_type_inc: Device
     doc: 2D spatial light modulator used in the experiment.
@@ -138,6 +149,8 @@ groups:
           - width, height
         shape:
           - 2
+
+
   - neurodata_type_def: SpatialLightModulator3D
     neurodata_type_inc: Device
     doc: 3D spatial light modulator used in the experiment.
@@ -154,6 +167,8 @@ groups:
           - width, height, depth
         shape:
           - 3
+
+
   - neurodata_type_def: LightSource
     neurodata_type_inc: Device
     doc: Light source used in the experiment.
@@ -189,6 +204,8 @@ groups:
         dtype: text
         doc: Model of light source device.
         required: false
+
+
   - neurodata_type_def: OptogeneticStimulusTarget
     neurodata_type_inc: LabMetaData
     doc: Container to store the targated rois in a photostimulation experiment.
@@ -200,6 +217,8 @@ groups:
         neurodata_type_inc: DynamicTableRegion
         doc: A table region referencing a PlaneSegmentation object storing segmented ROIs that receive photostimulation.
         quantity: "?"
+
+
   - neurodata_type_def: PatternedOptogeneticStimulusTable
     neurodata_type_inc: TimeIntervals
     doc: Table to hold all patterned optogenetic stimulus onsets.
