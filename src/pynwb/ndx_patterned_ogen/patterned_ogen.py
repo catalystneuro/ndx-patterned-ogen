@@ -30,6 +30,7 @@ class PatternedOptogeneticStimulusSite(OptogeneticStimulusSite):
             "name": "spatial_light_modulator",
             "type": Device,
             "doc": "Spatial light modulator used to generate photostimulation pattern.",
+            "default": None,
         },
         {"name": "light_source", "type": Device, "doc": "Light source used to apply photostimulation."},
     )
